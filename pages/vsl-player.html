@@ -5,60 +5,85 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AISetupKit VSL</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;background:#0b0b14;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem}
-.video-wrapper{max-width:860px;width:100%;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#0b0b14;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem}
+.video-wrapper{max-width:860px;width:100%;border-radius:20px;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,.6);background:#fff}
 .player-container{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;cursor:pointer;background:#fff}
 
-.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;flex-direction:column;padding:2rem 3rem;text-align:center;color:#111;opacity:0;transition:opacity .5s ease;background:#fff}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;flex-direction:column;padding:2.5rem 3.5rem;text-align:center;color:#111;opacity:0;transition:opacity .5s ease}
 .slide.active{display:flex;opacity:1}
 
-/* ===== SLIDE 1 — The Opportunity ===== */
-.slide-1 h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;line-height:1.3;letter-spacing:-.02em;z-index:1}
-.slide-1 .tagline{font-size:clamp(1rem,2vw,1.3rem);margin-top:1.5rem;font-weight:700;color:#6366f1;z-index:1}
+/* ===== SLIDE 1 — THE OPPORTUNITY ===== */
+.slide-1{background:#0b0b14!important;color:#fff!important;position:relative;overflow:hidden}
+.slide-1 .bg-glow{position:absolute;top:-30%;right:-20%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.12),transparent 70%);z-index:0;pointer-events:none}
+.slide-1 .bg-glow-2{position:absolute;bottom:-30%;left:-20%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(6,182,212,.08),transparent 70%);z-index:0;pointer-events:none}
+.slide-1 .badge-top{position:absolute;top:1.5rem;left:2rem;z-index:2;display:flex;align-items:center;gap:.5rem}
+.slide-1 .badge-top .mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:900;color:#fff}
+.slide-1 .badge-top .label{font-size:.6rem;color:#6b7280;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.slide-1 .content{position:relative;z-index:2}
+.slide-1 .line{font-size:clamp(.9rem,1.8vw,1.1rem);font-weight:600;color:#6b7280;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.8rem}
+.slide-1 h1{font-size:clamp(1.6rem,3.8vw,2.8rem);font-weight:900;line-height:1.3;letter-spacing:-.02em}
+.slide-1 h1 .accent{background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.slide-1 h1 .accent2{color:#f0d47a}
+.slide-1 .divider{width:40px;height:3px;background:linear-gradient(90deg,#6366f1,#06b6d4);border-radius:2px;margin:1.2rem auto}
+.slide-1 .punch{font-size:clamp(1rem,2.2vw,1.3rem);font-weight:700;color:#a5b4fc;margin-top:.3rem}
 
-/* ===== SLIDE 2 — The Problem ===== */
-.slide-2 h1{font-size:clamp(1.6rem,4vw,2.8rem);font-weight:900;line-height:1.2;margin-bottom:1rem;color:#111;text-transform:none;z-index:1}
-.slide-2 .highlight{color:#ef4444;z-index:1}
+/* ===== SLIDE 2 — THE PROBLEM ===== */
+.slide-2{background:#fafafa!important;position:relative}
+.slide-2 .bg-accent{position:absolute;top:0;right:0;width:200px;height:200px;background:rgba(239,68,68,.03);border-radius:0 0 0 200px;z-index:0;pointer-events:none}
+.slide-2 .icon-block{z-index:2;margin-bottom:1rem;font-size:2rem;opacity:.4}
+.slide-2 .eyebrow{z-index:2;font-size:.7rem;font-weight:700;color:#ef4444;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem}
+.slide-2 h1{z-index:2;font-size:clamp(1.4rem,3.5vw,2.4rem);font-weight:800;line-height:1.35;color:#111;max-width:520px}
+.slide-2 h1 .danger{color:#dc2626;background:rgba(239,68,68,.06);padding:0 .2rem}
+.slide-2 .sub{z-index:2;margin-top:1rem;font-size:clamp(.8rem,1.5vw,.95rem);color:#6b7280;max-width:400px;line-height:1.5}
 
-/* ===== SLIDE 3 — The Solution ===== */
-.slide-3{z-index:1}
-.slide-3 .logo-badge{display:inline-flex;align-items:center;gap:.6rem;padding:.4rem 1.2rem;border-radius:50px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.15);z-index:1;margin-bottom:1rem}
-.slide-3 .logo-badge .lb-icon{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#fff}
-.slide-3 h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.2;z-index:1}
-.slide-3 h1 .gold{background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+/* ===== SLIDE 3 — THE SOLUTION ===== */
+.slide-3{background:#fff!important;position:relative}
+.slide-3 .logo-chip{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:50px;background:#f3f4f6;z-index:2;margin-bottom:1rem}
+.slide-3 .logo-chip .chip-icon{width:24px;height:24px;border-radius:5px;background:linear-gradient(135deg,#6366f1,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:900;color:#fff}
+.slide-3 .logo-chip .chip-label{font-size:.65rem;font-weight:700;color:#4b5563;letter-spacing:.06em;text-transform:uppercase}
+.slide-3 h1{z-index:2;font-size:clamp(1.3rem,3.2vw,2.2rem);font-weight:900;line-height:1.3;color:#111;max-width:500px}
+.slide-3 h1 .brand-grad{background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.slide-3 .tagline{z-index:2;margin-top:1rem;font-size:clamp(.75rem,1.3vw,.85rem);color:#9ca3af;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
 
-/* ===== SLIDE 4 — What's Inside ===== */
-.slide-4 h1{font-size:clamp(1.3rem,3vw,2rem);font-weight:900;margin-bottom:1.5rem;z-index:1;color:#111}
-.slide-4 .list{z-index:1;text-align:left;max-width:480px;width:100%}
-.slide-4 .list .item{display:flex;align-items:center;gap:.8rem;padding:.7rem 1rem;margin-bottom:.4rem;border-radius:8px;background:#f3f4f6;font-weight:700;font-size:clamp(.7rem,1.5vw,.85rem);color:#111}
-.slide-4 .list .item .dot{width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#06b6d4);flex-shrink:0}
-.slide-4 .list .item .sub{font-weight:400;color:#6b7280;margin-left:.3rem}
-.slide-4 .list .item .badge{font-weight:400;color:#6b7280;margin-left:auto;font-size:.65rem}
+/* ===== SLIDE 4 — WHAT'S INSIDE ===== */
+.slide-4{background:#fff!important;position:relative}
+.slide-4 .section-label{z-index:2;font-size:.65rem;font-weight:700;color:#6366f1;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.5rem}
+.slide-4 h2{z-index:2;font-size:clamp(1rem,2.5vw,1.5rem);font-weight:800;margin-bottom:1.2rem;color:#111}
+.slide-4 .list-grid{z-index:2;display:grid;gap:.4rem;width:100%;max-width:500px}
+.slide-4 .list-item{display:flex;align-items:center;gap:.6rem;padding:.55rem .9rem;border-radius:8px;background:#f9fafb;border:1px solid #e5e7eb;font-size:clamp(.6rem,1.2vw,.78rem);font-weight:700;color:#111;text-align:left}
+.slide-4 .list-item .bullet{width:5px;height:5px;border-radius:50%;background:#6366f1;flex-shrink:0}
+.slide-4 .list-item .light{font-weight:400;color:#6b7280;margin-left:.2rem}
+.slide-4 .list-item .pill{font-weight:600;font-size:.58rem;margin-left:auto;padding:.15rem .5rem;border-radius:50px;background:rgba(99,102,241,.08);color:#6366f1;flex-shrink:0}
 
-/* ===== SLIDE 5 — The Offer ===== */
-.slide-5 h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;z-index:1;background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.3rem}
-.slide-5 .line1{font-size:clamp(.8rem,1.5vw,1rem);z-index:1;color:#6b7280;margin-bottom:.3rem}
-.slide-5 .line2{font-size:clamp(.7rem,1.2vw,.85rem);z-index:1;color:#9ca3af}
-.slide-5 .guarantee{z-index:1;margin-top:.8rem;display:inline-flex;align-items:center;gap:.4rem;padding:.3rem 1rem;border-radius:50px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.15);color:#16a34a;font-weight:700;font-size:.75rem}
+/* ===== SLIDE 5 — THE OFFER ===== */
+.slide-5{background:linear-gradient(135deg,#0b0b14,#1a1a2e)!important;color:#fff!important;position:relative;overflow:hidden}
+.slide-5 .glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.08),transparent 70%);z-index:0;pointer-events:none}
+.slide-5 .offer-card{z-index:2;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:1.8rem 2.5rem;max-width:380px;width:100%}
+.slide-5 .offer-card .badge-offer{font-size:.6rem;font-weight:700;color:#f0d47a;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem}
+.slide-5 .offer-card .price{font-size:clamp(2.5rem,6vw,4rem);font-weight:900;background:linear-gradient(135deg,#f0d47a,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.slide-5 .offer-card .terms{font-size:clamp(.65rem,1.2vw,.8rem);color:#6b7280;margin:.3rem 0}
+.slide-5 .offer-card .guarantee{display:inline-flex;align-items:center;gap:.3rem;padding:.2rem .7rem;border-radius:50px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.1);color:#4ade80;font-size:.65rem;font-weight:700;margin-top:.5rem}
 
 /* ===== SLIDE 6 — CTA ===== */
-.slide-6{background:linear-gradient(135deg,#6366f1,#06b6d4)!important}
-.slide-6 h1{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:900;color:#fff;z-index:1}
-.slide-6 p{color:rgba(255,255,255,.85);font-size:clamp(.8rem,1.5vw,1rem);z-index:1;margin:.5rem 0 1rem}
-.slide-6 .cta-btn{z-index:1;display:inline-block;padding:.8rem 2rem;background:#fff;color:#6366f1;border-radius:10px;font-weight:800;font-size:.9rem;text-decoration:none;transition:transform .15s}
-.slide-6 .cta-btn:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,0,0,.15)}
+.slide-6{background:linear-gradient(135deg,#6366f1,#06b6d4)!important;color:#fff!important}
+.slide-6 .icon-top{z-index:2;font-size:2rem;margin-bottom:.3rem}
+.slide-6 h1{z-index:2;font-size:clamp(1.3rem,3vw,2rem);font-weight:900;color:#fff;max-width:400px}
+.slide-6 .cta-btn{z-index:2;display:inline-block;margin-top:1rem;padding:.75rem 2rem;background:#fff;color:#6366f1;border-radius:10px;font-weight:800;font-size:.85rem;text-decoration:none;transition:transform .15s;box-shadow:0 4px 15px rgba(0,0,0,.1)}
+.slide-6 .cta-btn:hover{transform:translateY(-2px)}
 
-.controls{display:flex;align-items:center;gap:.8rem;padding:.7rem 1.5rem;background:#0b0b14}
-.play-btn{background:#6366f1;color:#fff;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.controls{display:flex;align-items:center;gap:.8rem;padding:.65rem 1.2rem;background:#0b0b14}
+.play-btn{background:#6366f1;color:#fff;border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:transform .15s;flex-shrink:0}
 .play-btn:hover{transform:scale(1.1)}
-.progress{flex:1;height:4px;background:#2a2a3e;border-radius:4px;position:relative;cursor:pointer}
+.progress{flex:1;height:4px;background:#2a2a3e;border-radius:4px;position:relative;cursor:pointer;min-width:40px}
 .progress-fill{height:100%;background:linear-gradient(90deg,#6366f1,#06b6d4);border-radius:4px;width:0%}
-.time{color:#6b7280;font-size:.75rem;min-width:70px;text-align:right}
+.time{color:#6b7280;font-size:.7rem;min-width:65px;text-align:right;flex-shrink:0}
 
 @media(max-width:500px){
-.slide{padding:1.2rem}
-.slide-4 .list .item{padding:.5rem .7rem;font-size:.7rem}
+.slide{padding:1.2rem!important}
+.slide-5 .offer-card{padding:1.2rem}
 }
 </style>
 </head>
@@ -66,50 +91,65 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 <div class="video-wrapper">
 <div class="player-container" id="player" onclick="document.getElementById('playBtn').click()">
 
-<!-- SLIDE 1 — The Opportunity -->
+<!-- SLIDE 1 — THE OPPORTUNITY (dark gradient, glow effects, badge) -->
 <div class="slide slide-1 active" id="slide0">
-<h1>YOU'VE SEEN<br>WHAT AI CAN DO.</h1>
-<h1>EVERYONE IS<br>TALKING ABOUT IT.</h1>
-<h1>BUT NO ONE IS<br>SHOWING YOU HOW TO<br>BUILD A BUSINESS<br>AROUND IT.</h1>
-<div class="tagline">─ That changes today ─</div>
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+<div class="badge-top"><div class="mark">AI</div><span class="label">AISetupKit</span></div>
+<div class="content">
+<div class="line">The Opportunity</div>
+<h1>You've Seen What<br><span class="accent">AI Can Do</span></h1>
+<h1>Everyone Is<br><span class="accent2">Talking About It</span></h1>
+<div class="divider"></div>
+<h1>But No One Is Showing<br>You How to Build a<br><span class="accent">Business Around It</span></h1>
+<div class="punch">— That changes today —</div>
+</div>
 </div>
 
-<!-- SLIDE 2 — The Problem -->
+<!-- SLIDE 2 — THE PROBLEM (light bg, red accent, clean typography) -->
 <div class="slide slide-2" id="slide1">
-<div style="font-size:clamp(3rem,8vw,5rem);margin-bottom:.5rem;z-index:1" class="highlight">💡</div>
-<h1>COMPANIES ARE<br><span class="highlight">DESPERATE</span> FOR AI HELP.<br>THEY JUST DON'T KNOW<br>WHERE TO FIND IT.</h1>
+<div class="bg-accent"></div>
+<div class="icon-block">!</div>
+<div class="eyebrow">The Truth</div>
+<h1>Companies Are <span class="danger">Desperate</span><br>for AI Help.<br>They Just Don't Know<br>Where to Find It.</h1>
+<div class="sub">The demand is massive. The supply of real help is tiny. That gap is your opportunity.</div>
 </div>
 
-<!-- SLIDE 3 — The Solution -->
+<!-- SLIDE 3 — THE SOLUTION (white card, logo chip, brand gradient) -->
 <div class="slide slide-3" id="slide2">
-<div class="logo-badge"><div class="lb-icon">AI</div> AISetupKit</div>
-<h1>INTRODUCING<br><span class="gold">AISetupKit</span><br>YOUR COMPLETE<br>AGENCY LAUNCH KIT</h1>
+<div class="logo-chip"><div class="chip-icon">AI</div><span class="chip-label">Introducing</span></div>
+<h1><span class="brand-grad">AISetupKit</span><br>Your Complete<br>Agency Launch Kit</h1>
+<div class="tagline">Not a Course · Not a Training · A Done-for-You Kit</div>
 </div>
 
-<!-- SLIDE 4 — What's Inside -->
+<!-- SLIDE 4 — WHAT'S INSIDE (clean list with bullets, pill badges) -->
 <div class="slide slide-4" id="slide3">
-<h1>WHAT'S INSIDE</h1>
-<div class="list">
-<div class="item"><div class="dot"></div>10 READY-TO-OFFER AI SERVICE TEMPLATES <span class="sub">→ pick & pitch</span></div>
-<div class="item"><div class="dot"></div>CLIENT ACQUISITION SCRIPTS THAT WORK <span class="sub">→ copy & close</span></div>
-<div class="item"><div class="dot"></div>DELIVERY SOPS THAT MAKE YOU PRO <span class="sub">→ deliver with confidence</span></div>
-<div class="item"><div class="dot"></div>PRICING GUIDE WITH CALCULATOR <span class="sub">→ charge what you're worth</span></div>
-<div class="item"><div class="dot"></div>TOOL STACK — UNDER $30/MONTH <span class="badge">🔥 most free</span></div>
+<div class="section-label">What's Inside</div>
+<h2>Everything You Need to Launch</h2>
+<div class="list-grid">
+<div class="list-item"><div class="bullet"></div>10 Ready-to-Offer AI Service Templates <span class="light">— pick one, customize, pitch</span></div>
+<div class="list-item"><div class="bullet"></div>Client Acquisition Scripts That Work <span class="light">— copy, paste, close</span></div>
+<div class="list-item"><div class="bullet"></div>Delivery SOPs That Make You Pro <span class="light">— deliver with confidence</span></div>
+<div class="list-item"><div class="bullet"></div>Pricing Guide with Calculator <span class="light">— charge what you're worth</span></div>
+<div class="list-item"><div class="bullet"></div>Tool Stack — Under $30/Month <span class="pill">Mostly Free</span></div>
 </div>
 </div>
 
-<!-- SLIDE 5 — The Offer -->
+<!-- SLIDE 5 — THE OFFER (dark card, gold price, gradient glow) -->
 <div class="slide slide-5" id="slide4">
-<h1>$97</h1>
-<div class="line1">ONE TIME · LIFETIME ACCESS</div>
-<div class="line2">Complete Kit · Instant Download</div>
-<div class="guarantee">🛡️ 30-Day Money-Back Guarantee</div>
+<div class="glow"></div>
+<div class="offer-card">
+<div class="badge-offer">☆ Complete Kit</div>
+<div class="price">$97</div>
+<div class="terms">One-Time · Lifetime Access · Instant Download</div>
+<div class="guarantee">🛡 30-Day Money-Back Guarantee</div>
+</div>
 </div>
 
-<!-- SLIDE 6 — CTA -->
+<!-- SLIDE 6 — CTA (gradient, white CTA button) -->
 <div class="slide slide-6" id="slide5">
+<div class="icon-top">🚀</div>
 <h1>Ready to Launch<br>Your AI Agency?</h1>
-<p>Stop thinking. Start building.</p>
 <a href="https://www.aisetupkit.com/#pricing" class="cta-btn">Get the Complete Kit →</a>
 </div>
 </div>
@@ -133,14 +173,14 @@ const progressBar = document.getElementById('progressBar');
 
 const totalDuration = 94;
 
-// Timings matched to your ~94s audio, aligned with original script sections:
-// Slide 1 (Opportunity): 0-13s — "That changes today"
-// Slide 2 (Problem): 13-32s — "Here's the truth..."
-// Slide 3 (Solution/AISetupKit): 32-50s — "That's exactly why..."
-// Slide 4 (What's Inside): 50-67s — "Here's what you get..."
-// Slide 5 (Offer/$97): 67-83s — "The Complete Kit is $97..."
-// Slide 6 (CTA): 83-94s — "If you're ready..."
-const slideTimings = [0, 13, 32, 50, 67, 83];
+// Stretched timings to give each slide more breathing room:
+// S1 (Opportunity): 0-15s — intro + "that changes today"
+// S2 (Problem): 15-38s — "here's the truth" (long narration)
+// S3 (Solution): 38-58s — "that's exactly why" (medium narration)
+// S4 (What's Inside): 58-76s — "here's what you get" (medium narration)
+// S5 (Offer): 76-88s — "$97 one time"
+// S6 (CTA): 88-94s — final push
+const slideTimings = [0, 15, 38, 58, 76, 88];
 let lastIdx = -1;
 
 audio.addEventListener('timeupdate', () => {
