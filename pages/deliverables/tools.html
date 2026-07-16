@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tool Stack — AISetupKit</title>
+<meta name="robots" content="noindex">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0b0b14;color:#e2e8f0;line-height:1.6}
+.container{max-width:900px;margin:0 auto;padding:2rem}
+.logo-mark{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff;font-size:1.1rem;font-weight:900;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-text{display:flex;flex-direction:column}
+.logo-top{font-size:.9rem;font-weight:900;color:#fff}
+.logo-bottom{font-size:.6rem;font-weight:600;color:#06b6d4;text-transform:uppercase}
+nav{display:flex;align-items:center;gap:2rem;padding:1.5rem 2rem;max-width:900px;margin:0 auto;border-bottom:1px solid rgba(255,255,255,.06)}
+nav a{color:#8892a4;text-decoration:none;font-size:.85rem}
+h1{font-size:1.8rem;margin-bottom:.3rem}
+.subtitle{color:#8892a4;margin-bottom:2rem}
+.tool-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.tool-card{background:#14142a;border-radius:12px;padding:1.5rem;border:1px solid rgba(255,255,255,.06);transition:transform .2s}
+.tool-card:hover{transform:translateY(-2px);border-color:rgba(99,102,241,.2)}
+.tool-card .cat{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:#06b6d4;font-weight:600;margin-bottom:.3rem}
+.tool-card h3{font-size:1rem;margin-bottom:.3rem}
+.tool-card p{color:#8892a4;font-size:.8rem}
+.tool-card .cost{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.7rem;font-weight:600;margin-top:.5rem}
+.cost-free{background:rgba(74,222,128,.1);color:#4ade80}
+.cost-paid{background:rgba(240,212,122,.1);color:#f0d47a}
+.cost-premium{background:rgba(99,102,241,.1);color:#a5b4fc}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2rem 0}
+.summary-card{text-align:center;padding:1.5rem;background:#14142a;border-radius:10px;border:1px solid rgba(255,255,255,.06)}
+.summary-card .num{font-size:2rem;font-weight:900;color:#f0d47a}
+.summary-card .label{font-size:.8rem;color:#8892a4}
+@media(max-width:600px){.tool-grid,.summary{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+<a href="/" class="logo-mark">
+<div class="logo-icon">AI</div>
+<div class="logo-text"><span class="logo-top">AISetupKit</span><span class="logo-bottom">Launch your AI agency</span></div>
+</a>
+<a href="/members">Dashboard</a>
+<a href="/deliverables/templates">Service Menu</a>
+</nav>
+<div class="container">
+<h1>🛠️ AI Tool Stack</h1>
+<p class="subtitle">Every tool you need to run your AI agency. Most are free or under $30/mo total.</p>
+
+<div class="summary">
+<div class="summary-card"><div class="num">12</div><div class="label">Tools</div></div>
+<div class="summary-card"><div class="num">6</div><div class="label">Free Tools</div></div>
+<div class="summary-card"><div class="num">$29</div><div class="label">Monthly Cost</div></div>
+</div>
+
+<div class="tool-grid" id="toolGrid"></div>
+
+<div style="margin-top:2rem;padding:1.5rem;background:#14142a;border-radius:10px;border:1px solid rgba(255,255,255,.06)">
+<h4>⚡ Getting Started</h4>
+<p style="color:#8892a4;font-size:.85rem;margin-top:.5rem">Start with ChatGPT (free) and one automation tool (Make or Zapier). Add tools as you grow and your service offerings expand. Every tool above has a free tier — pay only when you need more capacity.</p>
+</div>
+</div>
+
+<script>
+const tools = [
+  {name:"ChatGPT",cat:"AI Core",desc:"Your primary AI engine. Write content, analyze data, generate scripts, build workflows.",cost:"Free - $20/mo",costType:"free"},
+  {name:"Claude (Anthropic)",cat:"AI Core",desc:"Better for long-form content and analysis. Excellent for research and document processing.",cost:"Free - $20/mo",costType:"free"},
+  {name:"Make (Integromat)",cat:"Automation",desc:"No-code automation platform. Connect apps and build workflows without coding.",cost:"Free - $9/mo",costType:"paid"},
+  {name:"Zapier",cat:"Automation",desc:"Alternative to Make. More integrations, simpler interface. Great for beginners.",cost:"Free - $20/mo",costType:"paid"},
+  {name:"Canva",cat:"Design",desc:"Create social media graphics, presentations, and branding materials with AI features.",cost:"Free - $13/mo",costType:"paid"},
+  {name:"ElevenLabs",cat:"Voice",desc:"AI voice generation for voice agents, podcasts, and audio content. Ultra-realistic voices.",cost:"Free - $5/mo",costType:"paid"},
+  {name:"Notion",cat:"Organization",desc:"All-in-one workspace for service menus, SOPs, client docs, and project management.",cost:"Free - $10/mo",costType:"free"},
+  {name:"Google Workspace",cat:"Productivity",desc:"Email (Gmail), Docs, Sheets, Drive. Everything you need for client communication.",cost:"Free - $6/mo",costType:"free"},
+  {name:"Looker Studio",cat:"Analytics",desc:"Free dashboard builder for data visualization and client reporting.",cost:"Free",costType:"free"},
+  {name:"Calendly",cat:"Scheduling",desc:"Automate meeting booking. Sync with your calendar for friction-free scheduling.",cost:"Free - $12/mo",costType:"free"},
+  {name:"Loom",cat:"Communication",desc:"Record quick video walkthroughs for client onboarding, training, and updates.",cost:"Free - $8/mo",costType:"free"},
+  {name:"OpenAI API",cat:"AI Core",desc:"Access GPT-4 and other models programmatically. Used for custom AI chatbot builds.",cost:"Pay per use (~$5-20/mo)",costType:"premium"}
+];
+
+const grid = document.getElementById('toolGrid');
+tools.forEach(t => {
+  const costClass = t.costType === 'free' ? 'cost-free' : t.costType === 'paid' ? 'cost-paid' : 'cost-premium';
+  grid.innerHTML += `<div class="tool-card"><div class="cat">${t.cat}</div><h3>${t.name}</h3><p>${t.desc}</p><div class="cost ${costClass}">${t.cost}</div></div>`;
+});
+</script>
+</body>
+</html>

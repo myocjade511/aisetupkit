@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Objection Handler — AISetupKit Bonus</title>
+<meta name="robots" content="noindex">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0b0b14;color:#e2e8f0;line-height:1.6}
+.container{max-width:900px;margin:0 auto;padding:2rem}
+.logo-mark{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff;font-size:1.1rem;font-weight:900;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-text{display:flex;flex-direction:column}
+.logo-top{font-size:.9rem;font-weight:900;color:#fff}
+.logo-bottom{font-size:.6rem;font-weight:600;color:#06b6d4;text-transform:uppercase}
+nav{display:flex;align-items:center;gap:2rem;padding:1.5rem 2rem;max-width:900px;margin:0 auto;border-bottom:1px solid rgba(255,255,255,.06)}
+nav a{color:#8892a4;text-decoration:none;font-size:.85rem}
+h1{font-size:1.8rem;margin-bottom:.3rem}
+.subtitle{color:#8892a4;margin-bottom:2rem}
+.trainer{position:relative;background:#14142a;border-radius:16px;padding:2rem;border:1px solid rgba(255,255,255,.06);margin-bottom:2rem;text-align:center}
+.trainer .objection-display{font-size:1.3rem;font-weight:700;margin-bottom:1rem;min-height:4rem}
+.trainer .response-display{background:#0b0b14;border-radius:10px;padding:1.5rem;font-size:.95rem;line-height:1.6;color:#8892a4;min-height:6rem;text-align:left}
+.training-btns{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-top:1.5rem}
+.obj-btn{padding:.6rem 1.2rem;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:#0b0b14;color:#8892a4;cursor:pointer;font-size:.85rem;transition:all .2s}
+.obj-btn:hover,.obj-btn.active{background:#6366f1;color:#fff;border-color:#6366f1}
+.copy-btn{padding:.6rem 1.2rem;border-radius:8px;border:1px solid #6366f1;background:transparent;color:#6366f1;cursor:pointer;font-size:.85rem}
+.copy-btn:hover{background:rgba(99,102,241,.1)}
+.objections-list{display:flex;flex-direction:column;gap:.75rem;margin:2rem 0}
+.obj-item{background:#14142a;border-radius:10px;padding:1rem 1.2rem;border:1px solid rgba(255,255,255,.06);cursor:pointer;transition:all .2s}
+.obj-item:hover{border-color:#6366f1}
+.obj-item .obj-q{font-weight:600;font-size:.9rem;margin-bottom:.3rem}
+.obj-item .obj-a{color:#8892a4;font-size:.85rem;display:none;margin-top:.5rem;line-height:1.5}
+.obj-item.open .obj-a{display:block}
+.obj-item .expand{color:#6366f1;font-size:.8rem}
+.toast{position:fixed;bottom:2rem;right:2rem;background:#4ade80;color:#0b0b14;padding:.8rem 1.5rem;border-radius:10px;font-weight:600;opacity:0;transition:opacity .3s}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<nav>
+<a href="/" class="logo-mark">
+<div class="logo-icon">AI</div>
+<div class="logo-text"><span class="logo-top">AISetupKit</span><span class="logo-bottom">Launch your AI agency</span></div>
+</a>
+<a href="/members">Dashboard</a>
+<a href="/bonuses">Bonuses</a>
+</nav>
+<div class="container">
+<h1>🎯 Objection Handler Trainer</h1>
+<p class="subtitle">Practice your responses. Click an objection to see the perfect response. Copy and use in real calls.</p>
+
+<div class="trainer">
+<div class="objection-display" id="objDisplay">"We don't have the budget right now."</div>
+<div class="response-display" id="resDisplay">I hear you. Most of my clients feel the same way at first — until they realize this actually saves them money. Let me show you the ROI. If this system saves your team 10 hours a week, that's roughly $400-$600/month in reclaimed productivity. The setup pays for itself in the first month. After that, it's pure profit.</div>
+<div class="training-btns">
+<button class="obj-btn active" onclick="showObj(0)">No Budget</button>
+<button class="obj-btn" onclick="showObj(1)">I Need to Think</button>
+<button class="obj-btn" onclick="showObj(2)">Already Have Someone</button>
+<button class="obj-btn" onclick="showObj(3)">Not Technical</button>
+<button class="obj-btn" onclick="showObj(4)">Too Busy</button>
+<button class="obj-btn" onclick="showObj(5)">Not Interested</button>
+<button class="copy-btn" id="copyResponseBtn">📋 Copy Response</button>
+</div>
+</div>
+
+<h2>All Objection Scripts</h2>
+<div class="objections-list" id="objList"></div>
+</div>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const objections = [
+  {q:"\"We don't have the budget right now.\"",a:"I hear you. Most of my clients feel the same way at first — until they realize this actually saves them money. Let me show you the ROI. If this system saves your team 10 hours a week, that's roughly $400-$600/month in reclaimed productivity. The setup pays for itself in the first month. After that, it's pure profit. Would it be fair to say the real question is whether the ROI justifies the investment?"},
+  {q:"\"I need to think about it.\"",a:"Of course. Take all the time you need. Just to help you make the best decision — what specific questions are still on your mind? Happy to answer them now so you have everything you need. Is it the price? The timeline? Whether it will actually work for your specific situation?"},
+  {q:"\"We already have someone handling that.\"",a:"That's great — it means you already understand the value. Can I ask what you're paying them? And are they delivering everything you need? In many cases, AI can handle the same work for a fraction of the cost with faster turnaround. I'm not saying replace your person — I'm saying let AI handle the repetitive parts so they can focus on higher-value work."},
+  {q:"\"I'm not technical enough for this.\"",a:"That's actually perfect — you don't need to be technical at all. I handle 100% of the setup, configuration, and training. You just tell me what you want done, and I make it happen. My clients range from restaurant owners to real estate agents. None of them know how to code. They just know they want more time and less stress."},
+  {q:"\"I'm too busy to set this up.\"",a:"I get it — that's exactly why you need this. My whole job is to take things off your plate. I handle everything from setup to training. You don't lift a finger. Think of me as a force multiplier: you invest a few minutes now, and I save you hours every week going forward."},
+  {q:"\"Not interested.\"",a:"No problem at all. Can I ask — is it because you don't think AI can help your business, or because you already have a solution in place? Either way, I respect your time. Let me leave you with one thing: if you ever find yourself spending more than 5 hours a week on repetitive tasks, shoot me a message. That's exactly what I solve. Take care."}
+];
+
+function showObj(idx) {
+  document.querySelectorAll('.obj-btn').forEach((b,i) => b.classList.toggle('active', i === idx));
+  document.getElementById('objDisplay').textContent = objections[idx].q;
+  document.getElementById('resDisplay').textContent = objections[idx].a;
+  localStorage.setItem('activeObj', idx);
+}
+
+document.getElementById('copyResponseBtn').onclick = () => {
+  const active = document.querySelector('.obj-btn.active');
+  const idx = Array.from(document.querySelectorAll('.obj-btn')).indexOf(active);
+  navigator.clipboard.writeText(objections[idx].q + '\n\n' + objections[idx].a);
+  const t = document.getElementById('toast'); t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000);
+};
+
+// Build full list
+const list = document.getElementById('objList');
+objections.forEach((o, i) => {
+  const item = document.createElement('div');
+  item.className = 'obj-item';
+  item.innerHTML = `<div class="obj-q">${o.q}</div><div class="obj-a">${o.a}</div><span class="expand">▼ Click to expand</span>`;
+  item.onclick = () => item.classList.toggle('open');
+  list.appendChild(item);
+});
+
+const saved = localStorage.getItem('activeObj');
+if (saved) showObj(parseInt(saved));
+</script>
+</body>
+</html>

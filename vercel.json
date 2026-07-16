@@ -3,6 +3,13 @@
   "rewrites": [
     {"source": "/thank-you", "destination": "/pages/thank-you.html"},
     {"source": "/members", "destination": "/pages/members.html"},
+    {"source": "/bonuses/proposals", "destination": "/pages/bonuses/proposals.html"},
+    {"source": "/bonuses/objections", "destination": "/pages/bonuses/objections.html"},
+    {"source": "/bonuses", "destination": "/pages/bonuses/index.html"},
+    {"source": "/deliverables/templates", "destination": "/pages/deliverables/templates.html"},
+    {"source": "/deliverables/scripts", "destination": "/pages/deliverables/scripts.html"},
+    {"source": "/deliverables/pricing", "destination": "/pages/deliverables/pricing.html"},
+    {"source": "/deliverables/tools", "destination": "/pages/deliverables/tools.html"},
     {"source": "/(.*)", "destination": "/index.html"}
   ]
 }

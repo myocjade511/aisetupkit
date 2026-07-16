@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 AI Service Menu Templates — AISetupKit</title>
+<meta name="robots" content="noindex">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0b0b14;color:#e2e8f0;line-height:1.6}
+.container{max-width:900px;margin:0 auto;padding:2rem}
+.logo-mark{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff;font-size:1.1rem;font-weight:900;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-text{display:flex;flex-direction:column}
+.logo-top{font-size:.9rem;font-weight:900;color:#fff}
+.logo-bottom{font-size:.6rem;font-weight:600;color:#06b6d4;text-transform:uppercase}
+nav{display:flex;align-items:center;gap:2rem;padding:1.5rem 2rem;max-width:900px;margin:0 auto;border-bottom:1px solid rgba(255,255,255,.06)}
+nav a{color:#8892a4;text-decoration:none;font-size:.85rem}
+nav a:hover{color:#fff}
+h1{font-size:1.8rem;margin-bottom:.3rem}
+.subtitle{color:#8892a4;margin-bottom:2rem}
+.tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.tab{padding:.5rem 1.2rem;border-radius:8px;background:#14142a;border:1px solid rgba(255,255,255,.06);color:#8892a4;cursor:pointer;font-size:.85rem;transition:all .2s}
+.tab.active{background:#6366f1;color:#fff;border-color:#6366f1}
+.tab:hover:not(.active){border-color:#6366f1}
+.service-card{display:none;background:#14142a;border-radius:12px;padding:2rem;border:1px solid rgba(255,255,255,.06)}
+.service-card.active{display:block}
+.service-card h2{font-size:1.3rem;margin-bottom:.5rem;color:#06b6d4}
+.service-card .price-tag{display:inline-block;padding:.2rem .8rem;border-radius:50px;background:rgba(240,212,122,.1);color:#f0d47a;font-weight:700;font-size:.85rem;margin:.5rem 0 1rem}
+.service-card .desc{color:#8892a4;margin-bottom:1rem;line-height:1.5}
+.service-card .deliverables h4{color:#a5b4fc;margin-bottom:.5rem}
+.service-card .deliverables ul{list-style:none;margin-bottom:1rem}
+.service-card .deliverables li{padding:.3rem 0;font-size:.85rem;color:#8892a4}
+.service-card .deliverables li::before{content:"→ ";color:#6366f1}
+.copy-btn{display:inline-block;padding:.5rem 1rem;border-radius:6px;background:transparent;border:1px solid #6366f1;color:#6366f1;cursor:pointer;font-size:.8rem;margin-top:.5rem}
+.copy-btn:hover{background:rgba(99,102,241,.1)}
+.toast{position:fixed;bottom:2rem;right:2rem;background:#4ade80;color:#0b0b14;padding:.8rem 1.5rem;border-radius:10px;font-weight:600;font-size:.9rem;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+@media(max-width:600px){.tabs{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav>
+<a href="/" class="logo-mark">
+<div class="logo-icon">AI</div>
+<div class="logo-text"><span class="logo-top">AISetupKit</span><span class="logo-bottom">Launch your AI agency</span></div>
+</a>
+<a href="/members">Dashboard</a>
+<a href="/thank-you">Welcome</a>
+<a href="/deliverables/templates">Service Menu</a>
+</nav>
+<div class="container">
+<h1>📋 10 AI Service Templates</h1>
+<p class="subtitle">Pick a service, customize the description, and start offering it today. Click any tab to view the full template.</p>
+
+<div class="tabs" id="tabContainer"></div>
+<div id="serviceContainer"></div>
+
+<div style="margin-top:2rem;padding:1.5rem;background:#14142a;border-radius:10px;border:1px solid rgba(255,255,255,.06)">
+<h4>💡 How to use these templates</h4>
+<p style="color:#8892a4;font-size:.85rem;margin-top:.5rem">Pick 1-3 services to start. Customize the description for your niche. Set your price using the pricing guide. Then pitch using the client acquisition scripts.</p>
+</div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const services = [
+  {name:"AI Chatbot Setup",price:"$500-$1,500/setup",desc:"Build and deploy a custom AI chatbot for client websites. Handles FAQ, lead capture, and appointment booking. No coding required — use ChatGPT + chatbot platforms.",deliverables:["Custom chatbot built for their business","Embed code for website","Knowledge base setup (FAQ, docs, product info)","Training doc for handling complex questions","1 month support"]},
+  {name:"AI Content Automation",price:"$300-$800/mo",desc:"Automate content creation for blogs, social media, and email. Uses AI to research, write, edit, and schedule — client approves and posts.",deliverables:["10 blog posts/mo","20 social media posts/mo","4 email newsletters/mo","Content calendar","SEO keyword research","Edits based on client feedback"]},
+  {name:"Email AI Sequence Builder",price:"$400-$1,000/setup",desc:"Build automated email sequences using AI copywriting. Welcome sequences, nurture flows, re-engagement campaigns — all written and optimized by AI.",deliverables:["5-email welcome sequence","3-email nurture flow","Re-engagement campaign","Subject line A/B tests","Open rate optimization","ConvertKit/Mailchimp/ActiveCampaign setup"]},
+  {name:"AI Voice Agent",price:"$800-$2,000/setup",desc:"Deploy AI voice agents that answer calls, book appointments, and qualify leads 24/7. No hold music, no voicemail — real conversations.",deliverables:["Custom voice agent setup","Call routing configuration","Appointment booking integration","Lead capture + CRM sync","Training on edge cases","1 month monitoring"]},
+  {name:"AI Social Media Manager",price:"$400-$1,200/mo",desc:"Full social media management powered by AI. Content creation, scheduling, engagement, and analytics across all platforms.",deliverables:["30 social posts/mo (customized per platform)","AI-generated images/graphics","Daily engagement monitoring","Weekly analytics report","Hashtag research","Monthly strategy call"]},
+  {name:"AI Data Analysis & Reporting",price:"$500-$1,500/mo",desc:"Transform raw data into beautiful dashboards and actionable insights. AI analyzes trends, anomalies, and opportunities.",deliverables:["Custom dashboard (Looker Studio/Tableau)","Monthly performance report","Trend analysis","Anomaly detection","Recommendation report","Data cleanup and normalization"]},
+  {name:"AI Process Automation",price:"$1,000-$3,000/setup",desc:"Automate repetitive business processes using AI + no-code tools. Invoice processing, lead routing, data entry, approval workflows.",deliverables:["Process audit and documentation","Automation workflow build","Integration with existing tools","Testing and debugging","SOP document","30 day support"]},
+  {name:"AI Review & Reputation Manager",price:"$300-$700/mo",desc:"Automate review collection, response, and reputation management. AI writes personalized responses to every review.",deliverables:["Review generation campaigns","AI response to all reviews","Sentiment analysis","Monthly reputation report","Competitor comparison","Crisis alert system"]},
+  {name:"AI Sales Script Generator",price:"$300-$600/setup",desc:"Generate custom sales scripts and objection handlers using AI trained on your client's industry and offer.",deliverables:["10 cold call scripts","10 email outreach scripts","Objection handler document","Discovery call framework","Script training guide","A/B tested variations"]},
+  {name:"AI Training & Onboarding",price:"$500-$1,500/setup",desc:"Build AI-powered training modules and onboarding flows for clients' teams. Interactive, trackable, and scalable.",deliverables:["Training module structure","AI-generated video scripts","Interactive quiz builder","Progress tracking dashboard","Employee certification system","Monthly updates"]}
+];
+
+const tabContainer = document.getElementById('tabContainer');
+const serviceContainer = document.getElementById('serviceContainer');
+
+services.forEach((s, i) => {
+  const tab = document.createElement('div');
+  tab.className = 'tab' + (i === 0 ? ' active' : '');
+  tab.textContent = s.name;
+  tab.dataset.index = i;
+  tab.onclick = () => showService(i);
+  tabContainer.appendChild(tab);
+});
+
+function showService(idx) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab')[idx].classList.add('active');
+  const s = services[idx];
+  serviceContainer.innerHTML = `
+    <div class="service-card active">
+      <h2>${s.name}</h2>
+      <div class="price-tag">${s.price}</div>
+      <div class="desc">${s.desc}</div>
+      <div class="deliverables">
+        <h4>What you deliver:</h4>
+        <ul>${s.deliverables.map(d => '<li>'+d+'</li>').join('')}</ul>
+      </div>
+      <button class="copy-btn" onclick='copyService(${idx})'>📋 Copy Service Description</button>
+    </div>`;
+}
+
+function copyService(idx) {
+  const s = services[idx];
+  const text = `${s.name}\nPrice: ${s.price}\n\n${s.desc}\n\nDeliverables:\n${s.deliverables.map(d => '→ '+d).join('\n')}`;
+  navigator.clipboard.writeText(text).then(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2000);
+  });
+}
+
+showService(0);
+</script>
+</body>
+</html>

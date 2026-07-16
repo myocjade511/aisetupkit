@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing Guide — AISetupKit</title>
+<meta name="robots" content="noindex">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0b0b14;color:#e2e8f0;line-height:1.6}
+.container{max-width:900px;margin:0 auto;padding:2rem}
+.logo-mark{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff;font-size:1.1rem;font-weight:900;width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-text{display:flex;flex-direction:column}
+.logo-top{font-size:.9rem;font-weight:900;color:#fff}
+.logo-bottom{font-size:.6rem;font-weight:600;color:#06b6d4;text-transform:uppercase}
+nav{display:flex;align-items:center;gap:2rem;padding:1.5rem 2rem;max-width:900px;margin:0 auto;border-bottom:1px solid rgba(255,255,255,.06)}
+nav a{color:#8892a4;text-decoration:none;font-size:.85rem}
+h1{font-size:1.8rem;margin-bottom:.3rem}
+.subtitle{color:#8892a4;margin-bottom:2rem}
+table{width:100%;border-collapse:collapse;margin-bottom:2rem}
+th{text-align:left;padding:.8rem;background:#14142a;color:#a5b4fc;font-size:.85rem;font-weight:600}
+td{padding:.8rem;border-bottom:1px solid rgba(255,255,255,.06);font-size:.85rem;color:#8892a4}
+tr:hover td{background:rgba(99,102,241,.03)}
+.price-cell{color:#f0d47a;font-weight:700}
+.recurring{color:#4ade80;font-size:.75rem}
+.one-time{color:#6366f1;font-size:.75rem}
+.box{background:#14142a;border-radius:12px;padding:1.5rem;border:1px solid rgba(255,255,255,.06);margin-bottom:1.5rem}
+.box h3{font-size:1rem;margin-bottom:.5rem}
+.box p{color:#8892a4;font-size:.85rem;line-height:1.5}
+.calc-box{background:#14142a;border-radius:12px;padding:2rem;border:1px solid rgba(255,255,255,.06)}
+.calc-box label{display:block;margin-bottom:.5rem;font-size:.9rem;font-weight:600}
+.calc-box input{padding:.8rem;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:#0b0b14;color:#fff;font-size:1rem;width:100%;margin-bottom:1.5rem}
+.calc-box input:focus{outline:none;border-color:#6366f1}
+.result{font-size:2rem;font-weight:900;color:#4ade80}
+.result-note{color:#8892a4;font-size:.85rem;margin-top:.3rem}
+</style>
+</head>
+<body>
+<nav>
+<a href="/" class="logo-mark">
+<div class="logo-icon">AI</div>
+<div class="logo-text"><span class="logo-top">AISetupKit</span><span class="logo-bottom">Launch your AI agency</span></div>
+</a>
+<a href="/members">Dashboard</a>
+<a href="/deliverables/templates">Service Menu</a>
+</nav>
+<div class="container">
+<h1>💰 Pricing Guide</h1>
+<p class="subtitle">Know exactly what to charge for every AI service. Use the calculator below to set your rates.</p>
+
+<div class="calc-box">
+<label>Set your monthly income goal ($)</label>
+<input type="number" id="incomeGoal" value="5000" oninput="calcPricing()">
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem">
+<div><div class="result" id="setupResult">$0</div><div class="result-note">Per setup project (avg)</div></div>
+<div><div class="result" id="monthlyResult">$0</div><div class="result-note">Per monthly retainer (avg)</div></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:1.5rem">
+<div style="background:#0b0b14;border-radius:8px;padding:1rem;text-align:center"><div style="color:#8892a4;font-size:.8rem">Clients needed (setup-only)</div><div style="font-size:1.8rem;font-weight:900;color:#f0d47a" id="clientsSetup">0</div></div>
+<div style="background:#0b0b14;border-radius:8px;padding:1rem;text-align:center"><div style="color:#8892a4;font-size:.8rem">Clients needed (retainers)</div><div style="font-size:1.8rem;font-weight:900;color:#4ade80" id="clientsRetainer">0</div></div>
+</div>
+</div>
+
+<h2 style="margin:2rem 0 1rem">Service Pricing Table</h2>
+<table>
+<tr><th>Service</th><th>Setup (One-Time)</th><th>Monthly Retainer</th></tr>
+<tr><td>AI Chatbot Setup</td><td class="price-cell">$800-$1,500</td><td class="price-cell">$200-$400 <span class="recurring">/mo</span></td></tr>
+<tr><td>AI Content Automation</td><td class="price-cell">$500-$800</td><td class="price-cell">$500-$1,000 <span class="recurring">/mo</span></td></tr>
+<tr><td>Email AI Sequence Builder</td><td class="price-cell">$600-$1,200</td><td class="price-cell">$200-$400 <span class="recurring">/mo</span></td></tr>
+<tr><td>AI Voice Agent</td><td class="price-cell">$1,000-$2,500</td><td class="price-cell">$300-$600 <span class="recurring">/mo</span></td></tr>
+<tr><td>AI Social Media Manager</td><td class="price-cell">$500-$800</td><td class="price-cell">$800-$1,500 <span class="recurring">/mo</span></td></tr>
+<tr><td>AI Data Analysis</td><td class="price-cell">$800-$1,500</td><td class="price-cell">$400-$800 <span class="recurring">/mo</span></td></tr>
+<tr><td>AI Process Automation</td><td class="price-cell">$1,500-$3,000</td><td class="price-cell">$300-$600 <span class="recurring">/mo</span></td></tr>
+<tr><td>AI Review Management</td><td class="price-cell">$300-$500</td><td class="price-cell">$400-$800 <span class="recurring">/mo</span></td></tr>
+<tr><td>AI Sales Script Generator</td><td class="price-cell">$400-$800</td><td class="price-cell">$150-$300 <span class="recurring">/mo</span></td></tr>
+<tr><td>AI Training & Onboarding</td><td class="price-cell">$800-$2,000</td><td class="price-cell">$300-$500 <span class="recurring">/mo</span></td></tr>
+</table>
+
+<div class="box">
+<h3>📊 Pricing Strategy</h3>
+<p><strong>New agency owners:</strong> Start at the low end of the range above. Raise prices every 3 clients.</p>
+<p><strong>Experienced:</strong> Start at the high end. Bundle setup + 3 months retainer for a discounted package.</p>
+<p><strong>Premium tier:</strong> Once you have 5+ case studies, double your prices. The market will pay it.</p>
+</div>
+
+<div class="box">
+<h3>📦 Packaging Tips</h3>
+<p>• Always offer 3 tiers (Basic / Pro / Premium) — most people pick the middle one</p>
+<p>• Bundle setup + retainer for higher perceived value</p>
+<p>• Add a "Done For You" premium tier at 2x the Pro price</p>
+<p>• Never discount — add value instead (more services, faster delivery)</p>
+</div>
+</div>
+
+<script>
+function calcPricing() {
+  const goal = parseFloat(document.getElementById('incomeGoal').value) || 5000;
+  const setupAvg = Math.round(goal * 0.3 / 3); // 30% of income from 3 setup projects per month
+  const retainerAvg = Math.round(goal * 0.7 / 8); // 70% from retainers, 8 clients average
+  const clientsSetup = Math.ceil(goal * 0.3 / 1200); // avg $1200 setup project
+  const clientsRetainer = Math.ceil(goal * 0.7 / 700); // avg $700 retainer
+  document.getElementById('setupResult').textContent = '$' + setupAvg;
+  document.getElementById('monthlyResult').textContent = '$' + retainerAvg;
+  document.getElementById('clientsSetup').textContent = clientsSetup;
+  document.getElementById('clientsRetainer').textContent = clientsRetainer;
+}
+calcPricing();
+</script>
+</body>
+</html>
