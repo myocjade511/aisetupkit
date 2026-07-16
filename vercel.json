@@ -1,5 +1,10 @@
 {
   "version": 2,
+  "functions": {
+    "api/create-payment-intent.js": {
+      "memory": 128
+    }
+  },
   "rewrites": [
     {"source": "/thank-you", "destination": "/pages/thank-you.html"},
     {"source": "/members", "destination": "/pages/members.html"},
@@ -12,6 +17,7 @@
     {"source": "/deliverables/tools", "destination": "/pages/deliverables/tools.html"},
     {"source": "/vsl", "destination": "/pages/vsl-player.html"},
     {"source": "/vsl-player-embed.html", "destination": "/pages/vsl-player-embed.html"},
+    {"source": "/checkout", "destination": "/pages/checkout.html"},
     {"source": "/robots.txt", "destination": "/robots.txt"},
     {"source": "/sitemap.xml", "destination": "/sitemap.xml"},
     {"source": "/(.*)", "destination": "/index.html"}

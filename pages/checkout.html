@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout — AISetupKit</title>
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0b0b14;color:#e2e8f0;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem}
+.card{background:#14142a;border-radius:16px;padding:2.5rem;max-width:420px;width:100%;border:1px solid rgba(255,255,255,.06);text-align:center}
+.logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;color:#fff;margin:0 auto 1rem}
+h1{font-size:1.5rem;margin-bottom:.3rem}
+.price{font-size:3rem;font-weight:900;background:linear-gradient(135deg,#f0d47a,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.5rem 0}
+.desc{color:#8892a4;font-size:.85rem;margin-bottom:1.5rem;line-height:1.5}
+.btn{display:block;width:100%;padding:.9rem;border-radius:10px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff;border:none;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:.5rem}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.3)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.guarantee{margin-top:1.5rem;color:#4ade80;font-size:.8rem}
+.footer{margin-top:2rem;font-size:.7rem;color:#4a5568}
+#cardElement{border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem;margin-bottom:1rem;background:#1a1a2e}
+.StripeElement--focus{border-color:#6366f1}
+.error{color:#ef4444;font-size:.8rem;margin-top:.5rem;display:none}
+.success{display:none;text-align:center}
+.success .check{font-size:3rem;margin-bottom:.5rem}
+.success h2{color:#4ade80;margin-bottom:.5rem}
+.loader{display:inline-block;width:16px;height:16px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;margin-right:.5rem;vertical-align:middle}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="card" id="checkoutForm">
+<div class="logo">AI</div>
+<h1>AISetupKit Complete Kit</h1>
+<div class="price">$97</div>
+<div class="desc">Launch your AI automation agency in 7 days.<br>10 service templates · 6 scripts · Pricing guide · SOPs · Proposal builder · Objection handler</div>
+<div id="cardElement"></div>
+<div id="errorMsg" class="error"></div>
+<button class="btn" id="payBtn">Pay $97</button>
+<div class="guarantee">🛡️ 30-Day Money-Back Guarantee</div>
+<div class="footer">Secure checkout powered by Stripe · Test mode</div>
+</div>
+
+<div class="card success" id="successMsg">
+<div class="check">✅</div>
+<h2>Payment Successful!</h2>
+<p style="color:#8892a4;margin-bottom:1rem">Your AISetupKit access is being prepared.</p>
+<p style="font-size:.8rem;color:#6366f1">📧 Check your email for access instructions</p>
+<div class="footer" style="margin-top:1.5rem"><a href="https://www.aisetupkit.com" style="color:#6366f1">← Back to AISetupKit</a></div>
+</div>
+
+<script>
+const stripe = Stripe('pk_test_51TXfKVLJy1J1wtNpClRGniyKFlMReimzaQYs1AwU7kwEdHUrRpRaizMQddob33kT5gH6z92KlIrRi5xgQcNCvu9j00IVlxukHC');
+const elements = stripe.elements();
+const card = elements.create('card', {
+  style: {
+    base: {
+      color: '#e2e8f0',
+      fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
+      fontSize: '16px',
+      '::placeholder': { color: '#6b7280' }
+    },
+    invalid: { color: '#ef4444' }
+  }
+});
+card.mount('#cardElement');
+
+const payBtn = document.getElementById('payBtn');
+const errorMsg = document.getElementById('errorMsg');
+
+payBtn.addEventListener('click', async () => {
+  payBtn.disabled = true;
+  payBtn.innerHTML = '<span class="loader"></span> Processing...';
+  errorMsg.style.display = 'none';
+
+  const { paymentMethod, error } = await stripe.createPaymentMethod({
+    type: 'card',
+    card: card
+  });
+
+  if (error) {
+    errorMsg.textContent = error.message;
+    errorMsg.style.display = 'block';
+    payBtn.disabled = false;
+    payBtn.innerHTML = 'Pay $97';
+    return;
+  }
+
+  // Create payment intent on server
+  try {
+    const res = await fetch('/api/create-payment-intent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ paymentMethodId: paymentMethod.id })
+    });
+    const result = await res.json();
+
+    if (result.error) {
+      errorMsg.textContent = result.error;
+      errorMsg.style.display = 'block';
+      payBtn.disabled = false;
+      payBtn.innerHTML = 'Pay $97';
+      return;
+    }
+
+    // Confirm payment
+    const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(result.clientSecret, {
+      payment_method: paymentMethod.id
+    });
+
+    if (confirmError) {
+      errorMsg.textContent = confirmError.message;
+      errorMsg.style.display = 'block';
+      payBtn.disabled = false;
+      payBtn.innerHTML = 'Pay $97';
+      return;
+    }
+
+    if (paymentIntent.status === 'succeeded') {
+      document.getElementById('checkoutForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    }
+  } catch (e) {
+    errorMsg.textContent = 'Connection error. Please try again.';
+    errorMsg.style.display = 'block';
+    payBtn.disabled = false;
+    payBtn.innerHTML = 'Pay $97';
+  }
+});
+</script>
+</body>
+</html>
