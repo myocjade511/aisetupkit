@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AISetupKit — Logo Preview</title>
+<style>
+body{background:#0d0d1a;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;margin:0;padding:2rem}
+.logo-wrap{background:#1a1a2e;padding:3rem 4rem;border-radius:16px;border:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;align-items:center;gap:2rem}
+
+/* LIGHT variant */
+.logo-mark-light{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-icon-light{background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff;font-size:1.2rem;font-weight:900;width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-text-light{display:flex;flex-direction:column;}
+.logo-top-light{font-size:1rem;font-weight:900;color:#fff;letter-spacing:0.03em;line-height:1.1;}
+.logo-bottom-light{font-size:0.7rem;font-weight:600;color:#06b6d4;letter-spacing:0.06em;text-transform:uppercase;}
+
+/* DARK variant (for light backgrounds) */
+.logo-mark-dark{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.logo-icon-dark{background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff;font-size:1.2rem;font-weight:900;width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.logo-text-dark{display:flex;flex-direction:column;}
+.logo-top-dark{font-size:1rem;font-weight:900;color:#1a1a2e;letter-spacing:0.03em;line-height:1.1;}
+.logo-bottom-dark{font-size:0.7rem;font-weight:600;color:#6366f1;letter-spacing:0.06em;text-transform:uppercase;}
+
+.option{text-align:center;margin-bottom:2rem}
+.option h3{color:#f0d47a;margin-bottom:1rem;font-size:.9rem;text-transform:uppercase;letter-spacing:.1em}
+.alt-logos{display:flex;gap:2rem;flex-wrap:wrap;justify-content:center}
+</style>
+</head>
+<body>
+<div class="logo-wrap">
+<div class="option">
+  <h3>🖤 Default (Dark Background)</h3>
+  <a href="/" class="logo-mark-light">
+    <div class="logo-icon-light">AI</div>
+    <div class="logo-text-light">
+      <span class="logo-top-light">AISetupKit</span>
+      <span class="logo-bottom-light">Launch your AI agency</span>
+    </div>
+  </a>
+</div>
+
+<div class="option">
+  <h3>⬜ Light Background Variant</h3>
+  <div style="background:#f8f4ee;padding:1.5rem 2rem;border-radius:12px">
+    <a href="/" class="logo-mark-dark">
+      <div class="logo-icon-dark">AI</div>
+      <div class="logo-text-dark">
+        <span class="logo-top-dark">AISetupKit</span>
+        <span class="logo-bottom-dark">Launch your AI agency</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="option">
+  <h3>⚡ Alternative Icon Style</h3>
+  <a href="/" class="logo-mark-light">
+    <div class="logo-icon-light">⚡</div>
+    <div class="logo-text-light">
+      <span class="logo-top-light">AISetupKit</span>
+      <span class="logo-bottom-light">Launch your AI agency</span>
+    </div>
+  </a>
+</div>
+</div>
+</body>
+</html>
