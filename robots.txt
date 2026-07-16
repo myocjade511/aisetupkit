@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /deliverables/templates
+Allow: /deliverables/scripts
+Allow: /deliverables/pricing
+Allow: /deliverables/tools
+Allow: /bonuses/proposals
+Allow: /bonuses/objections
+Disallow: /thank-you
+Disallow: /members
+Disallow: /bonuses/
+Sitemap: https://aisetupkit.com/sitemap.xml
