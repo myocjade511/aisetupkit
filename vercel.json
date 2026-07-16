@@ -10,6 +10,7 @@
     {"source": "/deliverables/scripts", "destination": "/pages/deliverables/scripts.html"},
     {"source": "/deliverables/pricing", "destination": "/pages/deliverables/pricing.html"},
     {"source": "/deliverables/tools", "destination": "/pages/deliverables/tools.html"},
+    {"source": "/vsl", "destination": "/pages/vsl-player.html"},
     {"source": "/robots.txt", "destination": "/robots.txt"},
     {"source": "/sitemap.xml", "destination": "/sitemap.xml"},
     {"source": "/(.*)", "destination": "/index.html"}

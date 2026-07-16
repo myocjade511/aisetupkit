@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AISetupKit VSL Video Player</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0b0b14;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.video-wrapper{max-width:800px;width:100%;background:#14142a;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.player-container{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;flex-direction:column;padding:3rem;text-align:center;color:#fff}
+.slide.active{display:flex}
+.slide-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0}
+
+/* Slide styles */
+.slide-1 .slide-bg{background:linear-gradient(135deg,#0b0b14,#1a1a2e)}
+.slide-1 h1{font-size:2.5rem;font-weight:900;margin-bottom:1rem;z-index:1}
+.slide-1 .sub{color:#6366f1;font-size:1.1rem;z-index:1}
+.slide-1 .highlight{background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.slide-2 .slide-bg{background:linear-gradient(135deg,#0b0b14,#1a1a2e)}
+.slide-2 h2{font-size:2rem;font-weight:800;color:#f0d47a;margin-bottom:1rem;z-index:1}
+.slide-2 p{font-size:.9rem;color:#8892a4;max-width:500px;z-index:1}
+.slide-2 ul{z-index:1;list-style:none;text-align:left}
+.slide-2 li{padding:.3rem 0;font-size:.85rem;color:#e2e8f0;z-index:1}
+.slide-2 li span{color:#06b6d4;font-weight:700;z-index:1}
+
+.slide-3 .slide-bg{background:linear-gradient(135deg,#1a1a2e,#0b0b14)}
+.slide-3 h1{font-size:2.2rem;font-weight:900;margin-bottom:1rem;z-index:1;color:#f0d47a}
+.slide-3 p{font-size:.9rem;color:#8892a4;max-width:500px;z-index:1}
+
+.slide-4 .slide-bg{background:linear-gradient(135deg,#0b0b14,#14142a)}
+.slide-4 h2{font-size:1.5rem;font-weight:800;color:#06b6d4;margin-bottom:.5rem;z-index:1}
+.slide-4 p{color:#8892a4;font-size:.85rem;z-index:1}
+.slide-4 .grid{z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.5rem}
+.slide-4 .grid div{background:rgba(255,255,255,.03);padding:.4rem .8rem;border-radius:6px;font-size:.75rem}
+
+.slide-5 .slide-bg{background:linear-gradient(135deg,#14142a,#0b0b14)}
+.slide-5 .price{font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;z-index:1}
+.slide-5 .label{color:#8892a4;font-size:1rem;margin-bottom:.5rem;z-index:1}
+.slide-5 .subtext{color:#8892a4;font-size:.8rem;z-index:1}
+.slide-5 .guarantee{color:#4ade80;font-size:.85rem;margin-top:.5rem;z-index:1}
+
+.slide-6 .slide-bg{background:linear-gradient(135deg,#6366f1,#06b6d4)}
+.slide-6 h2{font-size:1.8rem;font-weight:900;color:#fff;margin-bottom:.5rem;z-index:1}
+.slide-6 p{color:rgba(255,255,255,.8);font-size:.9rem;z-index:1}
+.slide-6 .cta{z-index:1;display:inline-block;padding:.8rem 2rem;background:#fff;color:#6366f1;border-radius:10px;font-weight:700;margin-top:1rem;font-size:.9rem;text-decoration:none}
+
+.controls{display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;background:#0b0b14}
+.play-btn{background:#6366f1;color:#fff;border:none;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+.progress{flex:1;height:4px;background:#333;border-radius:2px;position:relative;cursor:pointer}
+.progress-fill{height:100%;background:linear-gradient(90deg,#6366f1,#06b6d4);border-radius:2px;width:0%}
+.time{color:#8892a4;font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="video-wrapper">
+<div class="player-container" id="player">
+<div class="slide slide-1 active" id="slide0">
+<div class="slide-bg"></div>
+<h1>Launch Your <span class="highlight">AI Agency</span></h1>
+<div class="sub">Done-for-you templates • 7 days • Zero coding</div>
+</div>
+<div class="slide slide-2" id="slide1">
+<div class="slide-bg"></div>
+<h2>What's Holding You Back?</h2>
+<p style="margin-bottom:1rem">Most people fail because they don't have:</p>
+<ul>
+<li><span>📋</span> A ready service menu</li>
+<li><span>📞</span> Client scripts that convert</li>
+<li><span>💰</span> The right pricing</li>
+<li><span>📄</span> Delivery systems</li>
+</ul>
+</div>
+<div class="slide slide-3" id="slide2">
+<div class="slide-bg"></div>
+<h1>AISetupKit</h1>
+<p>The complete done-for-you starter kit. Service templates, scripts, pricing guides, SOPs — everything you need to launch in 7 days.</p>
+</div>
+<div class="slide slide-4" id="slide3">
+<div class="slide-bg"></div>
+<h2>What's Inside</h2>
+<div class="grid">
+<div>10 AI Service Templates</div>
+<div>6 Client Scripts</div>
+<div>Pricing Guide + Calculator</div>
+<div>Tool Stack ($30/mo)</div>
+<div>Proposal Builder</div>
+<div>Objection Handler</div>
+</div>
+</div>
+<div class="slide slide-5" id="slide4">
+<div class="slide-bg"></div>
+<div class="label">Complete Kit</div>
+<div class="price">$97</div>
+<div class="subtext">One-time • Lifetime access</div>
+<div class="guarantee">🛡️ 30-Day Money-Back Guarantee</div>
+</div>
+<div class="slide slide-6" id="slide5">
+<div class="slide-bg"></div>
+<h2>Ready to Launch?</h2>
+<p>Your AI agency is one click away.</p>
+<a href="https://aisetupkit.com/#pricing" class="cta">Get the Complete Kit →</a>
+</div>
+</div>
+<div class="controls">
+<button class="play-btn" id="playBtn">▶</button>
+<div class="progress" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="time"><span id="currentTime">0:00</span> / <span id="totalTime">1:34</span></div>
+</div>
+</div>
+
+<audio id="vslAudio" src="./vsl-audio.mp3" preload="auto"></audio>
+
+<script>
+const audio = document.getElementById('vslAudio');
+const playBtn = document.getElementById('playBtn');
+const slides = document.querySelectorAll('.slide');
+const progressFill = document.getElementById('progressFill');
+const currentTimeEl = document.getElementById('currentTime');
+const totalTimeEl = document.getElementById('totalTime');
+const progressBar = document.getElementById('progressBar');
+
+const totalDuration = 94.056;
+totalTimeEl.textContent = '1:34';
+
+// Timings from audio analysis (approximate split of 94s into 6 slides)
+const slideTimings = [0, 16, 32, 48, 64, 80]; // seconds when each slide starts
+
+audio.addEventListener('loadedmetadata', () => {
+  totalTimeEl.textContent = formatTime(audio.duration);
+});
+
+audio.addEventListener('timeupdate', () => {
+  const t = audio.currentTime;
+  progressFill.style.width = (t / totalDuration * 100) + '%';
+  currentTimeEl.textContent = formatTime(t);
+  
+  // Switch slides based on timing
+  let activeIdx = 0;
+  for (let i = slideTimings.length - 1; i >= 0; i--) {
+    if (t >= slideTimings[i]) { activeIdx = i; break; }
+  }
+  slides.forEach((s, i) => s.classList.toggle('active', i === activeIdx));
+});
+
+audio.addEventListener('ended', () => {
+  playBtn.textContent = '▶';
+});
+
+playBtn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play();
+    playBtn.textContent = '⏸';
+  } else {
+    audio.pause();
+    playBtn.textContent = '▶';
+  }
+});
+
+progressBar.addEventListener('click', (e) => {
+  const rect = progressBar.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = pct * totalDuration;
+});
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = Math.floor(s % 60);
+  return m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+</script>
+</body>
+</html>
