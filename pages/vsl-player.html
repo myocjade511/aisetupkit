@@ -56,7 +56,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </head>
 <body>
 <div class="video-wrapper">
-<div class="player-container" id="player">
+<div class="player-container" id="player" style="cursor:pointer" onclick="document.getElementById('playBtn').click()">
 <div class="slide slide-1 active" id="slide0">
 <div class="slide-bg"></div>
 <h1>Launch Your <span class="highlight">AI Agency</span></h1>
@@ -111,7 +111,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 </div>
 </div>
 
-<audio id="vslAudio" src="./vsl-audio.mp3" preload="auto"></audio>
+<audio id="vslAudio" src="/pages/vsl-audio.mp3" preload="auto"></audio>
 
 <script>
 const audio = document.getElementById('vslAudio');
