@@ -11,6 +11,7 @@
     {"source": "/deliverables/pricing", "destination": "/pages/deliverables/pricing.html"},
     {"source": "/deliverables/tools", "destination": "/pages/deliverables/tools.html"},
     {"source": "/vsl", "destination": "/pages/vsl-player.html"},
+    {"source": "/vsl-player-embed.html", "destination": "/pages/vsl-player-embed.html"},
     {"source": "/robots.txt", "destination": "/robots.txt"},
     {"source": "/sitemap.xml", "destination": "/sitemap.xml"},
     {"source": "/(.*)", "destination": "/index.html"}
