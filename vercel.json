@@ -1,1 +1,8 @@
-{"version":2}
+{
+  "version": 2,
+  "rewrites": [
+    {"source": "/thank-you", "destination": "/pages/thank-you.html"},
+    {"source": "/members", "destination": "/pages/members.html"},
+    {"source": "/(.*)", "destination": "/index.html"}
+  ]
+}
