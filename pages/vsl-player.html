@@ -7,82 +7,58 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;background:#0b0b14;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem}
+.video-wrapper{max-width:860px;width:100%;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.player-container{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;cursor:pointer;background:#fff}
 
-.video-wrapper{max-width:860px;width:100%;background:#14142a;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.06);box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.player-container{width:100%;aspect-ratio:16/9;position:relative;overflow:hidden;cursor:pointer}
-.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;flex-direction:column;padding:2rem 3rem;text-align:center;color:#fff;opacity:0;transition:opacity .6s ease}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;flex-direction:column;padding:2rem 3rem;text-align:center;color:#111;opacity:0;transition:opacity .5s ease;background:#fff}
 .slide.active{display:flex;opacity:1}
 
-.slide-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0}
+/* ===== SLIDE 1 — The Opportunity ===== */
+.slide-1 h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;line-height:1.3;letter-spacing:-.02em;z-index:1}
+.slide-1 .tagline{font-size:clamp(1rem,2vw,1.3rem);margin-top:1.5rem;font-weight:700;color:#6366f1;z-index:1}
 
-/* ===== SLIDE 1 ===== */
-.slide-1 .slide-bg{background:linear-gradient(160deg,#0b0b14 0%,#1a1a2e 50%,#14142a 100%)}
-.slide-1 .badge{display:inline-block;padding:.4rem 1.2rem;border-radius:50px;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.2);color:#a5b4fc;font-size:.8rem;font-weight:700;letter-spacing:.05em;z-index:1;margin-bottom:1.5rem;text-transform:uppercase}
-.slide-1 h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;line-height:1.1;z-index:1;margin-bottom:.8rem}
-.slide-1 .gradient-text{background:linear-gradient(135deg,#6366f1,#06b6d4,#22d3ee);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.slide-1 .line{z-index:1;color:#f0d47a;font-weight:700}
-.slide-1 .sub{z-index:1;font-size:1rem;color:#8892a4;margin-top:.3rem}
-.slide-1 .pulse{z-index:1;margin-top:2rem;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:1.4rem;animation:pulse 2s infinite}
-@keyframes pulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(99,102,241,.4)}70%{transform:scale(1.05);box-shadow:0 0 0 15px rgba(99,102,241,0)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(99,102,241,0)}}
+/* ===== SLIDE 2 — The Problem ===== */
+.slide-2 h1{font-size:clamp(1.6rem,4vw,2.8rem);font-weight:900;line-height:1.2;margin-bottom:1rem;color:#111;text-transform:none;z-index:1}
+.slide-2 .highlight{color:#ef4444;z-index:1}
 
-/* ===== SLIDE 2 — Pain Points ===== */
-.slide-2 .slide-bg{background:linear-gradient(160deg,#0b0b14,#1a1a2e)}
-.slide-2 h2{font-size:clamp(1.5rem,4vw,2.4rem);font-weight:900;z-index:1;margin-bottom:1.5rem;color:#f0d47a}
-.slide-2 .pain-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;width:100%;max-width:500px;z-index:1}
-.slide-2 .pain-item{background:rgba(255,255,255,.04);border-radius:12px;padding:1rem;border:1px solid rgba(255,255,255,.06);text-align:left}
-.slide-2 .pain-item .icon{font-size:1.5rem;margin-bottom:.3rem}
-.slide-2 .pain-item .text{font-size:.85rem;font-weight:600;color:#e2e8f0}
-.slide-2 .pain-item .desc{font-size:.7rem;color:#6b7280;margin-top:.2rem}
-
-/* ===== SLIDE 3 — Solution ===== */
-.slide-3 .slide-bg{background:linear-gradient(160deg,#0b0b14,#14142a)}
-.slide-3 .logo-badge{display:inline-flex;align-items:center;gap:.6rem;padding:.4rem 1.2rem;border-radius:50px;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.15);z-index:1;margin-bottom:1rem}
+/* ===== SLIDE 3 — The Solution ===== */
+.slide-3{z-index:1}
+.slide-3 .logo-badge{display:inline-flex;align-items:center;gap:.6rem;padding:.4rem 1.2rem;border-radius:50px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.15);z-index:1;margin-bottom:1rem}
 .slide-3 .logo-badge .lb-icon{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:900;color:#fff}
-.slide-3 h1{font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;z-index:1;margin-bottom:.8rem}
-.slide-3 .gold{color:#f0d47a}
-.slide-3 p{font-size:clamp(.9rem,2vw,1.1rem);color:#8892a4;max-width:520px;z-index:1;line-height:1.6}
+.slide-3 h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.2;z-index:1}
+.slide-3 h1 .gold{background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* ===== SLIDE 4 — Features Grid ===== */
-.slide-4 .slide-bg{background:linear-gradient(160deg,#0b0b14,#1a1a2e)}
-.slide-4 h2{font-size:clamp(1.3rem,3.5vw,2rem);font-weight:900;z-index:1;margin-bottom:1.2rem;color:#06b6d4}
-.slide-4 .feat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.6rem;width:100%;max-width:560px;z-index:1}
-.slide-4 .feat{background:rgba(255,255,255,.03);border-radius:10px;padding:.8rem .6rem;border:1px solid rgba(255,255,255,.06);font-size:.7rem;font-weight:700;color:#e2e8f0;letter-spacing:.01em;line-height:1.3}
-.slide-4 .feat .fi{font-size:1.2rem;display:block;margin-bottom:.3rem}
+/* ===== SLIDE 4 — What's Inside ===== */
+.slide-4 h1{font-size:clamp(1.3rem,3vw,2rem);font-weight:900;margin-bottom:1.5rem;z-index:1;color:#111}
+.slide-4 .list{z-index:1;text-align:left;max-width:480px;width:100%}
+.slide-4 .list .item{display:flex;align-items:center;gap:.8rem;padding:.7rem 1rem;margin-bottom:.4rem;border-radius:8px;background:#f3f4f6;font-weight:700;font-size:clamp(.7rem,1.5vw,.85rem);color:#111}
+.slide-4 .list .item .dot{width:6px;height:6px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#06b6d4);flex-shrink:0}
+.slide-4 .list .item .sub{font-weight:400;color:#6b7280;margin-left:.3rem}
+.slide-4 .list .item .badge{font-weight:400;color:#6b7280;margin-left:auto;font-size:.65rem}
 
-/* ===== SLIDE 5 — Pricing ===== */
-.slide-5 .slide-bg{background:linear-gradient(160deg,#0b0b14,#14142a)}
-.slide-5 .pricing-card{background:linear-gradient(135deg,rgba(99,102,241,.08),rgba(6,182,212,.05));border:1px solid rgba(99,102,241,.2);border-radius:20px;padding:2rem 2.5rem;z-index:1;position:relative;max-width:380px;width:100%}
-.slide-5 .badge-price{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366f1,#06b6d4);padding:.3rem 1.2rem;border-radius:50px;font-size:.7rem;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.05em}
-.slide-5 .kit-name{font-size:.9rem;color:#8892a4;z-index:1;margin-bottom:.3rem}
-.slide-5 .price{font-size:clamp(2.5rem,6vw,4rem);font-weight:900;z-index:1;background:linear-gradient(135deg,#f0d47a,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.slide-5 .subtext{font-size:.8rem;color:#6b7280;z-index:1;margin-bottom:.5rem}
-.slide-5 .checklist{z-index:1;text-align:left;list-style:none}
-.slide-5 .checklist li{padding:.2rem 0;font-size:.75rem;color:#8892a4}
-.slide-5 .checklist li::before{content:"✓ ";color:#4ade80;font-weight:700}
-.slide-5 .guarantee{color:#4ade80;font-size:.75rem;z-index:1;margin-top:.6rem;display:flex;align-items:center;gap:.4rem;justify-content:center}
+/* ===== SLIDE 5 — The Offer ===== */
+.slide-5 h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;z-index:1;background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.3rem}
+.slide-5 .line1{font-size:clamp(.8rem,1.5vw,1rem);z-index:1;color:#6b7280;margin-bottom:.3rem}
+.slide-5 .line2{font-size:clamp(.7rem,1.2vw,.85rem);z-index:1;color:#9ca3af}
+.slide-5 .guarantee{z-index:1;margin-top:.8rem;display:inline-flex;align-items:center;gap:.4rem;padding:.3rem 1rem;border-radius:50px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.15);color:#16a34a;font-weight:700;font-size:.75rem}
 
 /* ===== SLIDE 6 — CTA ===== */
-.slide-6 .slide-bg{background:linear-gradient(135deg,#6366f1,#06b6d4)}
-.slide-6 h2{font-size:clamp(1.6rem,4vw,2.5rem);font-weight:900;color:#fff;z-index:1;margin-bottom:.5rem}
-.slide-6 p{color:rgba(255,255,255,.85);font-size:clamp(.85rem,2vw,1rem);z-index:1}
-.slide-6 .cta-btn{z-index:1;display:inline-block;padding:.9rem 2.5rem;background:#fff;color:#6366f1;border-radius:12px;font-weight:800;font-size:1rem;margin-top:1.2rem;text-decoration:none;transition:transform .2s,box-shadow .2s}
-.slide-6 .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,.2)}
-.slide-6 .dots{z-index:1;margin-top:1rem;display:flex;gap:.4rem}
-.slide-6 .dots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3)}
+.slide-6{background:linear-gradient(135deg,#6366f1,#06b6d4)!important}
+.slide-6 h1{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:900;color:#fff;z-index:1}
+.slide-6 p{color:rgba(255,255,255,.85);font-size:clamp(.8rem,1.5vw,1rem);z-index:1;margin:.5rem 0 1rem}
+.slide-6 .cta-btn{z-index:1;display:inline-block;padding:.8rem 2rem;background:#fff;color:#6366f1;border-radius:10px;font-weight:800;font-size:.9rem;text-decoration:none;transition:transform .15s}
+.slide-6 .cta-btn:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,0,0,.15)}
 
-.controls{display:flex;align-items:center;gap:.8rem;padding:.7rem 1.5rem;background:#0b0b14;border-top:1px solid rgba(255,255,255,.04)}
+.controls{display:flex;align-items:center;gap:.8rem;padding:.7rem 1.5rem;background:#0b0b14}
 .play-btn{background:#6366f1;color:#fff;border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:transform .15s}
 .play-btn:hover{transform:scale(1.1)}
 .progress{flex:1;height:4px;background:#2a2a3e;border-radius:4px;position:relative;cursor:pointer}
-.progress-fill{height:100%;background:linear-gradient(90deg,#6366f1,#06b6d4);border-radius:4px;width:0%;transition:width .1s}
+.progress-fill{height:100%;background:linear-gradient(90deg,#6366f1,#06b6d4);border-radius:4px;width:0%}
 .time{color:#6b7280;font-size:.75rem;min-width:70px;text-align:right}
 
 @media(max-width:500px){
-.slide{padding:1.5rem}
-.slide-2 .pain-grid{grid-template-columns:1fr}
-.slide-4 .feat-grid{grid-template-columns:1fr 1fr}
-.slide-5 .pricing-card{padding:1.5rem}
-.controls{padding:.5rem 1rem}
+.slide{padding:1.2rem}
+.slide-4 .list .item{padding:.5rem .7rem;font-size:.7rem}
 }
 </style>
 </head>
@@ -90,77 +66,51 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 <div class="video-wrapper">
 <div class="player-container" id="player" onclick="document.getElementById('playBtn').click()">
 
-<!-- SLIDE 1 — Intro -->
+<!-- SLIDE 1 — The Opportunity -->
 <div class="slide slide-1 active" id="slide0">
-<div class="slide-bg"></div>
-<div class="badge">⚡ Agency Launch Kit</div>
-<h1>Build Your <span class="gradient-text">AI Automation Agency</span></h1>
-<div class="line">━ Done-for-You Templates ━</div>
-<div class="sub">No coding • No fluff • 7 days to launch</div>
-<div class="pulse">▶</div>
+<h1>YOU'VE SEEN<br>WHAT AI CAN DO.</h1>
+<h1>EVERYONE IS<br>TALKING ABOUT IT.</h1>
+<h1>BUT NO ONE IS<br>SHOWING YOU HOW TO<br>BUILD A BUSINESS<br>AROUND IT.</h1>
+<div class="tagline">─ That changes today ─</div>
 </div>
 
-<!-- SLIDE 2 — Pain Points -->
+<!-- SLIDE 2 — The Problem -->
 <div class="slide slide-2" id="slide1">
-<div class="slide-bg"></div>
-<h2>What's Holding You Back?</h2>
-<div class="pain-grid">
-<div class="pain-item"><div class="icon">📋</div><div class="text">No Service Menu</div><div class="desc">Don't know what to offer</div></div>
-<div class="pain-item"><div class="icon">📞</div><div class="text">No Client Scripts</div><div class="desc">Don't know what to say</div></div>
-<div class="pain-item"><div class="icon">💰</div><div class="text">No Pricing Guide</div><div class="desc">Don't know what to charge</div></div>
-<div class="pain-item"><div class="icon">📄</div><div class="text">No Delivery System</div><div class="desc">Don't know how to deliver</div></div>
-</div>
+<div style="font-size:clamp(3rem,8vw,5rem);margin-bottom:.5rem;z-index:1" class="highlight">💡</div>
+<h1>COMPANIES ARE<br><span class="highlight">DESPERATE</span> FOR AI HELP.<br>THEY JUST DON'T KNOW<br>WHERE TO FIND IT.</h1>
 </div>
 
-<!-- SLIDE 3 — Solution -->
+<!-- SLIDE 3 — The Solution -->
 <div class="slide slide-3" id="slide2">
-<div class="slide-bg"></div>
 <div class="logo-badge"><div class="lb-icon">AI</div> AISetupKit</div>
-<h1>Your Complete <span class="gold">Done-for-You</span> Kit</h1>
-<p>Service templates, client scripts, pricing guides, and delivery SOPs — everything you need is already built. Just customize and launch.</p>
+<h1>INTRODUCING<br><span class="gold">AISetupKit</span><br>YOUR COMPLETE<br>AGENCY LAUNCH KIT</h1>
 </div>
 
-<!-- SLIDE 4 — Features -->
+<!-- SLIDE 4 — What's Inside -->
 <div class="slide slide-4" id="slide3">
-<div class="slide-bg"></div>
-<h2>What's Inside the Kit</h2>
-<div class="feat-grid">
-<div class="feat"><span class="fi">📋</span>10 Service Templates</div>
-<div class="feat"><span class="fi">📞</span>6 Client Scripts</div>
-<div class="feat"><span class="fi">💰</span>Pricing Calculator</div>
-<div class="feat"><span class="fi">🛠️</span>Tool Stack ($30/mo)</div>
-<div class="feat"><span class="fi">📄</span>Proposal Builder</div>
-<div class="feat"><span class="fi">🎯</span>Objection Handler</div>
+<h1>WHAT'S INSIDE</h1>
+<div class="list">
+<div class="item"><div class="dot"></div>10 READY-TO-OFFER AI SERVICE TEMPLATES <span class="sub">→ pick & pitch</span></div>
+<div class="item"><div class="dot"></div>CLIENT ACQUISITION SCRIPTS THAT WORK <span class="sub">→ copy & close</span></div>
+<div class="item"><div class="dot"></div>DELIVERY SOPS THAT MAKE YOU PRO <span class="sub">→ deliver with confidence</span></div>
+<div class="item"><div class="dot"></div>PRICING GUIDE WITH CALCULATOR <span class="sub">→ charge what you're worth</span></div>
+<div class="item"><div class="dot"></div>TOOL STACK — UNDER $30/MONTH <span class="badge">🔥 most free</span></div>
 </div>
 </div>
 
-<!-- SLIDE 5 — Pricing -->
+<!-- SLIDE 5 — The Offer -->
 <div class="slide slide-5" id="slide4">
-<div class="slide-bg"></div>
-<div class="pricing-card">
-<div class="badge-price">🔥 Most Popular</div>
-<div class="kit-name">Complete Kit</div>
-<div class="price">$97</div>
-<div class="subtext">One-time · Lifetime access · Instant download</div>
-<ul class="checklist">
-<li>10 AI service templates</li>
-<li>6 client acquisition scripts</li>
-<li>Pricing guide + calculator</li>
-<li>Delivery SOPs (all 10 services)</li>
-<li>Proposal builder</li>
-<li>Objection handler trainer</li>
-</ul>
+<h1>$97</h1>
+<div class="line1">ONE TIME · LIFETIME ACCESS</div>
+<div class="line2">Complete Kit · Instant Download</div>
 <div class="guarantee">🛡️ 30-Day Money-Back Guarantee</div>
-</div>
 </div>
 
 <!-- SLIDE 6 — CTA -->
 <div class="slide slide-6" id="slide5">
-<div class="slide-bg"></div>
-<h2>Ready to Launch?</h2>
-<p>Your AI agency is one click away.</p>
+<h1>Ready to Launch<br>Your AI Agency?</h1>
+<p>Stop thinking. Start building.</p>
 <a href="https://www.aisetupkit.com/#pricing" class="cta-btn">Get the Complete Kit →</a>
-<div class="dots"><span></span><span></span><span></span></div>
 </div>
 </div>
 
@@ -179,14 +129,18 @@ const playBtn = document.getElementById('playBtn');
 const slides = document.querySelectorAll('.slide');
 const progressFill = document.getElementById('progressFill');
 const currentTimeEl = document.getElementById('currentTime');
-const totalTimeEl = document.getElementById('totalTime');
 const progressBar = document.getElementById('progressBar');
 
 const totalDuration = 94;
 
-// Adjusted timings to match your actual audio pacing (94 seconds / 6 slides ≈ 15.7s each)
-// I listened: intro ~0-13s, pain ~13-27s, solution ~27-42s, features ~42-57s, pricing ~57-74s, cta ~74-94s
-const slideTimings = [0, 13, 27, 42, 57, 74];
+// Timings matched to your ~94s audio, aligned with original script sections:
+// Slide 1 (Opportunity): 0-13s — "That changes today"
+// Slide 2 (Problem): 13-32s — "Here's the truth..."
+// Slide 3 (Solution/AISetupKit): 32-50s — "That's exactly why..."
+// Slide 4 (What's Inside): 50-67s — "Here's what you get..."
+// Slide 5 (Offer/$97): 67-83s — "The Complete Kit is $97..."
+// Slide 6 (CTA): 83-94s — "If you're ready..."
+const slideTimings = [0, 13, 32, 50, 67, 83];
 let lastIdx = -1;
 
 audio.addEventListener('timeupdate', () => {
@@ -204,7 +158,7 @@ audio.addEventListener('timeupdate', () => {
   }
 });
 
-audio.addEventListener('ended', () => { playBtn.textContent = '▶'; lastIdx = -1; });
+audio.addEventListener('ended', () => { playBtn.textContent = '▶'; lastIdx = -1; slides.forEach((s,i) => s.classList.toggle('active', i===0)); });
 
 playBtn.addEventListener('click', (e) => {
   e.stopPropagation();
