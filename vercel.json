@@ -20,6 +20,7 @@
     {"source": "/vsl-player-embed.html", "destination": "/pages/vsl-player-embed.html"},
     {"source": "/checkout", "destination": "/pages/checkout.html"},
     {"source": "/free-tools/agency-plan", "destination": "/pages/free-tools/agency-plan.html"},
+    {"source": "/free-tools/income-simulator", "destination": "/pages/free-tools/income-simulator.html"},
     {"source": "/pages/(.*)", "destination": "/pages/$1"},
     {"source": "/robots.txt", "destination": "/robots.txt"},
     {"source": "/sitemap.xml", "destination": "/sitemap.xml"},

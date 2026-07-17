@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agency Income Simulator — AISetupKit</title>
+<meta name="description" content="Build your AI automation agency income model in real time. Drag sliders to set pricing, clients, and services. See your revenue, profit, and growth forecast instantly.">
+<meta name="keywords" content="AI agency income calculator, AI automation revenue, agency profit calculator, AI business simulator">
+<meta property="og:title" content="AI Agency Income Simulator">
+<meta property="og:description" content="See exactly how much money an AI automation agency can make. Interactive real-time simulator.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aisetupkit.com/free-tools/income-simulator">
+<link rel="canonical" href="https://aisetupkit.com/free-tools/income-simulator">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@600;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#0b0b14;color:#e2e8f0;min-height:100vh}
+.container{max-width:880px;width:100%;margin:0 auto;padding:1.5rem 1.5rem 3rem}
+header{text-align:center;padding:2rem 0 1.5rem}
+.logo-link{display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;margin-bottom:1rem}
+.logo-icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:.9rem;font-weight:900;color:#fff;flex-shrink:0}
+.logo-text{font-weight:900;color:#e2e8f0;font-size:.95rem}
+h1{font-size:clamp(1.6rem,5vw,2.4rem);font-weight:900;line-height:1.2;margin-bottom:.4rem}
+h1 .acc{background:linear-gradient(135deg,#f0d47a,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{color:#8892a4;font-size:.95rem;max-width:520px;margin:0 auto}
+.tabs{display:flex;gap:4px;background:#14142a;border-radius:12px;padding:4px;margin-bottom:1.5rem;overflow-x:auto}
+.tab{flex:1;padding:.7rem .5rem;border-radius:8px;border:none;background:transparent;color:#6b7280;font-weight:600;font-size:.85rem;cursor:pointer;transition:all .2s;white-space:nowrap;text-align:center;min-width:90px}
+.tab.active{background:linear-gradient(135deg,rgba(99,102,241,.2),rgba(6,182,212,.1));color:#e2e8f0}
+.tab:hover{color:#a5b4fc}
+.panel{display:none;animation:fadeIn .35s ease}
+.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card{background:#14142a;border-radius:16px;padding:1.5rem;border:1px solid rgba(255,255,255,.06)}
+.card-title{font-size:.75rem;color:#6366f1;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.slider-group{margin-bottom:1rem}
+.slider-group:last-child{margin-bottom:0}
+.slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:.3rem}
+.slider-label span{font-size:.85rem;font-weight:600}
+.slider-label .val{font-size:.95rem;font-weight:700;color:#f0d47a;font-family:'JetBrains Mono',monospace}
+.slider-label .val.green{color:#4ade80}
+.slider-label .val.purple{color:#a5b4fc}
+input[type="range"]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;background:rgba(255,255,255,.08);outline:none;transition:background .2s}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#06b6d4);cursor:pointer;border:2px solid #1a1a2e;box-shadow:0 2px 8px rgba(99,102,241,.3);transition:transform .15s}
+input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+input[type="range"]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#06b6d4);cursor:pointer;border:2px solid #1a1a2e}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1.5rem}
+.kpi-box{background:#14142a;border-radius:12px;padding:1rem;border:1px solid rgba(255,255,255,.06);text-align:center}
+.kpi-box .kpi-label{font-size:.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:.06em;font-weight:600;margin-bottom:.3rem}
+.kpi-box .kpi-num{font-size:1.5rem;font-weight:900;font-family:'JetBrains Mono',monospace;background:linear-gradient(135deg,#6366f1,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.kpi-box .kpi-num.gold{background:linear-gradient(135deg,#f0d47a,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.chart-area{position:relative;height:200px;margin:1rem 0 0;display:flex;align-items:flex-end;gap:4px;padding:0 4px}
+.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;position:relative}
+.bar-outer{width:100%;height:180px;display:flex;flex-direction:column-reverse;align-items:center;position:relative}
+.bar{width:65%;border-radius:4px 4px 0 0;min-height:4px;transition:height .4s cubic-bezier(.4,0,.2,1);position:relative}
+.bar.revenue{background:linear-gradient(180deg,#6366f1,rgba(99,102,241,.4))}
+.bar.profit{background:linear-gradient(180deg,#4ade80,rgba(74,222,128,.4))}
+.bar-cost{background:rgba(239,68,68,.3);border-radius:4px 4px 0 0;transition:height .4s cubic-bezier(.4,0,.2,1)}
+.bar-label{font-size:.6rem;color:#6b7280;margin-top:4px;text-align:center;font-weight:500}
+.bar-tooltip{position:absolute;top:-26px;left:50%;transform:translateX(-50%);background:#1a1a2e;color:#e2e8f0;padding:3px 8px;border-radius:6px;font-size:.65rem;white-space:nowrap;font-weight:600;border:1px solid rgba(255,255,255,.08);opacity:0;transition:opacity .2s}
+.bar-group:hover .bar-tooltip{opacity:1}
+.breakdown-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1rem}
+.break-item{padding:.6rem .8rem;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04);display:flex;justify-content:space-between;align-items:center}
+.break-item .name{font-size:.8rem;color:#8892a4}
+.break-item .amount{font-size:.85rem;font-weight:700;font-family:'JetBrains Mono',monospace}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.8rem;border-radius:10px;border:none;font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;text-decoration:none}
+.btn-primary{background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.3)}
+.btn-outline{background:transparent;border:1px solid rgba(255,255,255,.08);color:#8892a4}
+.btn-outline:hover{border-color:rgba(255,255,255,.2);color:#e2e8f0}
+.actions{display:flex;gap:.8rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap}
+.month-box{background:#14142a;border-radius:12px;padding:1.2rem;border:1px solid rgba(255,255,255,.06);display:none}
+.month-box.show{display:block;animation:fadeIn .35s ease}
+.month-box h3{font-size:.9rem;font-weight:700;margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem}
+.month-box .month-list{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}
+.month-item{padding:.5rem;border-radius:8px;background:rgba(255,255,255,.03);text-align:center;border:1px solid rgba(255,255,255,.04)}
+.month-item .n{font-size:.65rem;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.month-item .v{font-size:.8rem;font-weight:700;font-family:'JetBrains Mono',monospace;margin-top:.2rem}
+.comparison-box{background:#14142a;border-radius:12px;padding:1.2rem;border:1px solid rgba(255,255,255,.06);margin-top:1rem}
+.comparison-box h3{font-size:.85rem;font-weight:700;margin-bottom:.6rem;color:#f0d47a}
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.comp-row{display:flex;justify-content:space-between;padding:.4rem .6rem;border-radius:6px;background:rgba(255,255,255,.02);font-size:.8rem}
+.comp-row .l{color:#6b7280}
+.comp-row .r{font-weight:600}
+.share-box{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.share-box.show{display:flex}
+.share-box .modal{background:#14142a;border-radius:16px;padding:2rem;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.06);text-align:center;animation:fadeIn .3s ease}
+.share-box .modal h3{font-size:1.1rem;margin-bottom:.5rem}
+.share-box .modal p{color:#8892a4;font-size:.85rem;margin-bottom:1rem}
+.share-box .modal .share-link{background:#1a1a2e;padding:.8rem;border-radius:8px;font-size:.8rem;color:#a5b4fc;word-break:break-all;margin-bottom:.8rem;font-family:'JetBrains Mono',monospace}
+.share-box .modal .share-btns{display:flex;gap:.5rem;justify-content:center}
+.tip{color:#6b7280;font-size:.75rem;margin-top:.5rem;text-align:center}
+.whatif-item{background:rgba(255,255,255,.02);border-radius:8px;padding:.7rem .8rem;margin-bottom:.5rem;display:flex;justify-content:space-between;align-items:center}
+.whatif-item:last-child{margin-bottom:0}
+.whatif-item .desc{font-size:.8rem;color:#8892a4;flex:1}
+.whatif-item .impact{font-size:.8rem;font-weight:700;font-family:'JetBrains Mono',monospace;margin-left:1rem}
+footer{text-align:center;padding:1.5rem;font-size:.75rem;color:#4a5568}
+footer a{color:#6366f1;text-decoration:none}
+@media(max-width:600px){
+.kpi-grid{grid-template-columns:1fr 1fr}
+.breakdown-grid{grid-template-columns:1fr}
+.month-box .month-list{grid-template-columns:repeat(2,1fr)}
+.comparison-grid{grid-template-columns:1fr}
+.bar-label{display:none}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<a href="/" class="logo-link">
+<div class="logo-icon">AI</div>
+<div class="logo-text">AISetupKit</div>
+</a>
+<h1>💰 AI Agency <span class="acc">Income Simulator</span></h1>
+<p class="sub">Drag the sliders to build your agency model. See revenue, costs, and profit update in real time.</p>
+</header>
+
+<div class="kpi-grid">
+<div class="kpi-box"><div class="kpi-label">Monthly Revenue</div><div class="kpi-num gold" id="monthlyRev">$0</div></div>
+<div class="kpi-box"><div class="kpi-label">Monthly Costs</div><div class="kpi-num" id="monthlyCost">$0</div></div>
+<div class="kpi-box"><div class="kpi-label">Monthly Profit</div><div class="kpi-num gold" id="monthlyProfit">$0</div></div>
+</div>
+
+<div class="tabs">
+<button class="tab active" data-tab="sim" onclick="switchTab('sim')">🎛️ Simulate</button>
+<button class="tab" data-tab="chart" onclick="switchTab('chart')">📊 Forecast</button>
+<button class="tab" data-tab="services" onclick="switchTab('services')">🧩 Services</button>
+<button class="tab" data-tab="compare" onclick="switchTab('compare')">⚖️ Compare</button>
+</div>
+
+<div class="panel active" id="panel-sim">
+<div class="card" style="margin-bottom:1rem">
+<div class="card-title">Client Revenue Model</div>
+<div class="slider-group">
+<div class="slider-label"><span>Retainer Clients</span><span class="val" id="retainerCount">3</span></div>
+<input type="range" id="retainerSlider" min="0" max="50" value="3" oninput="recalc()">
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>Avg Retainer Fee</span><span class="val green" id="retainerFee">$1,500</span></div>
+<input type="range" id="retainerFeeSlider" min="300" max="5000" value="1500" step="100" oninput="recalc()">
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>One-Time Projects (per month)</span><span class="val" id="projectCount">2</span></div>
+<input type="range" id="projectSlider" min="0" max="20" value="2" oninput="recalc()">
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>Avg Project Fee</span><span class="val purple" id="projectFee">$1,000</span></div>
+<input type="range" id="projectFeeSlider" min="200" max="10000" value="1000" step="100" oninput="recalc()">
+</div>
+</div>
+<div class="card" style="margin-top:1rem">
+<div class="card-title">Operating Costs</div>
+<div class="slider-group">
+<div class="slider-label"><span>Tools & Subscriptions</span><span class="val" id="toolCost">$150</span></div>
+<input type="range" id="toolSlider" min="0" max="1000" value="150" step="10" oninput="recalc()">
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>Advertising & Lead Gen</span><span class="val" id="adCost">$200</span></div>
+<input type="range" id="adSlider" min="0" max="5000" value="200" step="50" oninput="recalc()">
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>VA / Freelancer Help</span><span class="val" id="vaCost">$300</span></div>
+<input type="range" id="vaSlider" min="0" max="5000" value="300" step="100" oninput="recalc()">
+</div>
+<div class="slider-group">
+<div class="slider-label"><span>Misc (hosting, phone, etc)</span><span class="val" id="miscCost">$100</span></div>
+<input type="range" id="miscSlider" min="0" max="2000" value="100" step="25" oninput="recalc()">
+</div>
+</div>
+<div class="actions" style="margin-top:1rem">
+<button class="btn btn-outline" onclick="shareResults()">📤 Share My Numbers</button>
+<button class="btn btn-primary" onclick="switchTab('chart'); recalc()">📊 See the Forecast →</button>
+</div>
+<div class="tip">💡 Most AI agency owners start with 1-3 clients at $1,000-2,000/mo and scale from there.</div>
+</div>
+
+<div class="panel" id="panel-chart">
+<div class="card" style="margin-bottom:1rem">
+<div class="card-title">12-Month Revenue Forecast</div>
+<div class="chart-area" id="chartContainer"></div>
+</div>
+<div class="month-box show" id="monthlyBreakdown">
+<h3>📅 Year 1 Month-by-Month</h3>
+<div class="month-list" id="monthList"></div>
+</div>
+<div class="kpi-grid" style="margin-top:1rem">
+<div class="kpi-box"><div class="kpi-label">Year 1 Revenue</div><div class="kpi-num gold" id="yearTotalRev">$0</div></div>
+<div class="kpi-box"><div class="kpi-label">Year 1 Costs</div><div class="kpi-num" id="yearTotalCost">$0</div></div>
+<div class="kpi-box"><div class="kpi-label">Year 1 Profit</div><div class="kpi-num gold" id="yearTotalProfit">$0</div></div>
+</div>
+<div class="actions" style="margin-top:1rem">
+<button class="btn btn-outline" onclick="switchTab('sim')">← Back to Simulator</button>
+<a href="/checkout" class="btn btn-primary">📦 Get AISetupKit →</a>
+</div>
+</div>
+
+<div class="panel" id="panel-services">
+<div class="card" style="margin-bottom:1rem">
+<div class="card-title">Service Profit Analysis</div>
+<p style="font-size:.85rem;color:#8892a4;margin-bottom:1rem">See how different service types affect your profit margin.</p>
+<div class="breakdown-grid" id="serviceBreakdown"></div>
+</div>
+<div class="card" style="margin-top:1rem">
+<div class="card-title">Your Agency Readiness Score</div>
+<div style="text-align:center;padding:1rem">
+<div style="font-size:3rem;font-weight:900;font-family:'JetBrains Mono',monospace;background:linear-gradient(135deg,#f0d47a,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text" id="agencyScore">—</div>
+<div style="font-size:.85rem;color:#8892a4;margin:.3rem 0" id="scoreLabel">Adjust sliders to see your score</div>
+<div style="width:100%;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;margin-top:.8rem">
+<div id="scoreBar" style="height:100%;border-radius:4px;background:linear-gradient(90deg,#6366f1,#06b6d4,#4ade80);width:0%;transition:width .4s cubic-bezier(.4,0,.2,1)"></div>
+</div>
+</div>
+</div>
+<div class="actions" style="margin-top:1rem">
+<button class="btn btn-outline" onclick="switchTab('sim')">← Back to Simulator</button>
+</div>
+</div>
+
+<div class="panel" id="panel-compare">
+<div class="card" style="margin-bottom:1rem">
+<div class="card-title">⚖️ How You Compare</div>
+<p style="font-size:.85rem;color:#8892a4;margin-bottom:1rem">See how your agency model stacks up against industry benchmarks.</p>
+</div>
+<div class="comparison-box">
+<h3>📊 Agency Benchmark Comparison</h3>
+<div class="comparison-grid" id="benchmarkGrid"></div>
+</div>
+<div class="comparison-box" style="margin-top:.8rem">
+<h3>💡 What Would Happen If You...</h3>
+<div id="whatIfScenarios"></div>
+</div>
+<div class="actions" style="margin-top:1rem">
+<a href="/checkout" class="btn btn-primary">🚀 Get the Kit & Start →</a>
+<button class="btn btn-outline" onclick="switchTab('sim')">← Try Different Numbers</button>
+</div>
+</div>
+</div>
+
+<footer>
+<a href="https://aisetupkit.com">aisetupkit.com</a> — Launch your AI automation agency in 7 days
+</footer>
+
+<div class="share-box" id="shareModal">
+<div class="modal">
+<h3>📤 Share Your Results</h3>
+<p id="shareText">Your AI agency income snapshot</p>
+<div class="share-link" id="shareLink">aisetupkit.com/free-tools/income-simulator</div>
+<div class="share-btns">
+<button class="btn btn-primary" onclick="copyShareLink()">📋 Copy Link</button>
+<button class="btn btn-outline" onclick="closeShare()">Close</button>
+</div>
+</div>
+</div>
+
+<script>
+const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function recalc() {
+  const rc = parseInt(document.getElementById('retainerSlider').value);
+  const rf = parseInt(document.getElementById('retainerFeeSlider').value);
+  const pc = parseInt(document.getElementById('projectSlider').value);
+  const pf = parseInt(document.getElementById('projectFeeSlider').value);
+  const tc = parseInt(document.getElementById('toolSlider').value);
+  const ac = parseInt(document.getElementById('adSlider').value);
+  const vc = parseInt(document.getElementById('vaSlider').value);
+  const mc = parseInt(document.getElementById('miscSlider').value);
+
+  document.getElementById('retainerCount').textContent = rc;
+  document.getElementById('retainerFee').textContent = '$' + rf.toLocaleString();
+  document.getElementById('projectCount').textContent = pc;
+  document.getElementById('projectFee').textContent = '$' + pf.toLocaleString();
+  document.getElementById('toolCost').textContent = '$' + tc.toLocaleString();
+  document.getElementById('adCost').textContent = '$' + ac.toLocaleString();
+  document.getElementById('vaCost').textContent = '$' + vc.toLocaleString();
+  document.getElementById('miscCost').textContent = '$' + mc.toLocaleString();
+
+  const rev = rc * rf + pc * pf;
+  const costs = tc + ac + vc + mc;
+  const profit = Math.max(0, rev - costs);
+
+  document.getElementById('monthlyRev').textContent = '$' + rev.toLocaleString();
+  document.getElementById('monthlyCost').textContent = '$' + costs.toLocaleString();
+  document.getElementById('monthlyProfit').textContent = '$' + profit.toLocaleString();
+
+  updateChart(rc, rf, pc, pf, tc, ac, vc, mc);
+  updateMonthlyBreakdown(rc, rf, pc, pf);
+  updateServiceBreakdown();
+  updateBenchmarkComparison(rev, costs, profit, rc);
+  updateAgencyScore(rev, costs, profit, rc);
+  updateWhatIf(rc, rf, pc, pf, tc, ac, vc, mc);
+}
+
+function updateChart(rc, rf, pc, pf, tc, ac, vc, mc) {
+  const container = document.getElementById('chartContainer');
+  container.innerHTML = '';
+  const growthR = 0.10, growthP = 0.05;
+  let yrRev = 0, yrCost = 0;
+
+  for (let m = 0; m < 12; m++) {
+    const rClients = Math.round(rc * Math.pow(1 + growthR, m));
+    const rFee = Math.round(rf * (1 + 0.02 * m));
+    const pCount = Math.round(pc * Math.pow(1 + growthP, m));
+    const pFee = Math.round(pf * (1 + 0.015 * m));
+    const mRev = rClients * rFee + pCount * pFee;
+    const mCost = tc + Math.round(ac * (1 + 0.05 * m)) + Math.round(vc * (1 + 0.08 * m)) + mc;
+    yrRev += mRev;
+    yrCost += mCost;
+
+    const bg = document.createElement('div');
+    bg.className = 'bar-group';
+    const bo = document.createElement('div');
+    bo.className = 'bar-outer';
+    const maxV = Math.max(mRev, mCost, 1000);
+
+    const costBar = document.createElement('div');
+    costBar.className = 'bar-cost';
+    costBar.style.height = (mCost / maxV * 175) + 'px';
+
+    const revBar = document.createElement('div');
+    revBar.className = 'bar revenue';
+    revBar.style.height = (mRev / maxV * 175) + 'px';
+
+    const tip = document.createElement('div');
+    tip.className = 'bar-tooltip';
+    tip.textContent = '$' + mRev.toLocaleString();
+
+    bo.appendChild(costBar);
+    bo.appendChild(revBar);
+    bo.appendChild(tip);
+    bg.appendChild(bo);
+
+    const lbl = document.createElement('div');
+    lbl.className = 'bar-label';
+    lbl.textContent = monthNames[m];
+    bg.appendChild(lbl);
+    container.appendChild(bg);
+  }
+
+  document.getElementById('yearTotalRev').textContent = '$' + Math.round(yrRev).toLocaleString();
+  document.getElementById('yearTotalCost').textContent = '$' + Math.round(yrCost).toLocaleString();
+  document.getElementById('yearTotalProfit').textContent = '$' + Math.round(Math.max(0, yrRev - yrCost)).toLocaleString();
+}
+
+function updateMonthlyBreakdown(rc, rf, pc, pf) {
+  const list = document.getElementById('monthList');
+  list.innerHTML = '';
+  const growthR = 0.10, growthP = 0.05;
+  for (let m = 0; m < 12; m++) {
+    const rClients = Math.round(rc * Math.pow(1 + growthR, m));
+    const rFee = Math.round(rf * (1 + 0.02 * m));
+    const pCount = Math.round(pc * Math.pow(1 + growthP, m));
+    const pFee = Math.round(pf * (1 + 0.015 * m));
+    const mRev = rClients * rFee + pCount * pFee;
+    const div = document.createElement('div');
+    div.className = 'month-item';
+    div.innerHTML = '<div class="n">' + monthNames[m] + '</div><div class="v">$' + Math.round(mRev).toLocaleString() + '</div>';
+    list.appendChild(div);
+  }
+}
+
+function updateServiceBreakdown() {
+  const services = [
+    { name: 'Chatbots & AI Assistants', margin: 75, demand: '🔥 High', emoji: '🤖' },
+    { name: 'Content Automation', margin: 70, demand: '🔥 High', emoji: '📝' },
+    { name: 'Voice Agents', margin: 65, demand: '📈 Growing', emoji: '🎙️' },
+    { name: 'Social Media AI', margin: 72, demand: '🔥 High', emoji: '📱' },
+    { name: 'Process Automation', margin: 68, demand: '📈 Growing', emoji: '⚙️' },
+    { name: 'Data Analysis & Reports', margin: 62, demand: '📈 Growing', emoji: '📊' }
+  ];
+  document.getElementById('serviceBreakdown').innerHTML = services.map(s =>
+    '<div class="break-item"><div><div class="name">' + s.emoji + ' ' + s.name + '</div><div style="font-size:.7rem;color:#6b7280">Demand: ' + s.demand + '</div></div><div class="amount" style="color:' + (s.margin > 70 ? '#4ade80' : '#f0d47a') + '">' + s.margin + '% margin</div></div>'
+  ).join('');
+}
+
+function updateBenchmarkComparison(rev, costs, profit, rc) {
+  const margin = rev > 0 ? Math.round((rev - costs) / rev * 100) : 0;
+  const grid = document.getElementById('benchmarkGrid');
+  const items = [
+    { label: 'Your Monthly Revenue', val: '$' + rev.toLocaleString(), bench: 'Industry Avg: $8,500', good: rev >= 8500 },
+    { label: 'Your Profit Margin', val: margin + '%', bench: 'Industry Avg: 72%', good: margin >= 72 },
+    { label: 'Your Client Count', val: rc.toString(), bench: 'Top Earners: 12-20 clients', good: rc >= 12 },
+    { label: 'Year 1 Projection', val: '$' + (rev * 12).toLocaleString(), bench: 'Top 25% Goal: $65,000', good: rev * 12 >= 65000 }
+  ];
+  grid.innerHTML = items.map(b =>
+    '<div class="comp-row"><span class="l">' + b.label + '</span><span class="r" style="color:' + (b.good ? '#4ade80' : '#f0d47a') + '">' + b.val + '</span></div>' +
+    '<div class="comp-row" style="font-size:.75rem"><span class="l">' + b.bench + '</span><span class="r">' + (b.good ? '✅ On track' : '💪 Room to grow') + '</span></div>'
+  ).join('');
+}
+
+function updateAgencyScore(rev, costs, profit, rc) {
+  const margin = rev > 0 ? (rev - costs) / rev : 0;
+  let score = 0;
+  if (rc >= 1) score += 15;
+  if (rc >= 3) score += 10;
+  if (rc >= 8) score += 15;
+  if (rc >= 15) score += 10;
+  if (margin >= 0.5) score += 15;
+  if (margin >= 0.7) score += 10;
+  if (margin >= 0.85) score += 5;
+  if (rev >= 3000) score += 5;
+  if (rev >= 7000) score += 5;
+  if (rev >= 15000) score += 5;
+  if (profit >= 2000) score += 5;
+
+  score = Math.min(100, score);
+  document.getElementById('agencyScore').textContent = score + '/100';
+  document.getElementById('scoreBar').style.width = score + '%';
+
+  let label = '';
+  if (score >= 80) label = '🔥 Agency Ready — Your model is solid. Time to launch!';
+  else if (score >= 60) label = '💪 Strong Foundation — A few more clients and you\'re scaling.';
+  else if (score >= 40) label = '📈 Building Momentum — Increase clients or raise prices.';
+  else label = '🌱 Early Stage — Every agency starts here. Keep going!';
+  document.getElementById('scoreLabel').textContent = label;
+}
+
+function updateWhatIf(rc, rf, pc, pf, tc, ac, vc, mc) {
+  const currentRev = rc * rf + pc * pf;
+  const currentCost = tc + ac + vc + mc;
+  const currentProfit = Math.max(0, currentRev - currentCost);
+  const container = document.getElementById('whatIfScenarios');
+  const scenarios = [];
+
+  // Scenario 1: Raise rates by 20%
+  const s1rev = rc * Math.round(rf * 1.2) + pc * Math.round(pf * 1.2);
+  const s1profit = Math.max(0, s1rev - currentCost);
+  const s1diff = s1profit - currentProfit;
+  scenarios.push({ desc: 'Raised your rates by 20%', impact: (s1diff > 0 ? '+$' : '-$') + Math.abs(s1diff).toLocaleString() + '/mo' });
+
+  // Scenario 2: Add 2 more retainer clients
+  const s2rev = (rc + 2) * rf + pc * pf;
+  const s2profit = Math.max(0, s2rev - currentCost);
+  const s2diff = s2profit - currentProfit;
+  scenarios.push({ desc: 'Added 2 more retainer clients', impact: (s2diff > 0 ? '+$' : '-$') + Math.abs(s2diff).toLocaleString() + '/mo' });
+
+  // Scenario 3: Cut ads and replace with referrals
+  const s3rev = currentRev;
+  const s3cost = tc + 0 + vc + mc;
+  const s3profit = Math.max(0, s3rev - s3cost);
+  const s3diff = s3profit - currentProfit;
+  scenarios.push({ desc: 'Cut ad spend, focused on referrals', impact: (s3diff > 0 ? '+$' : '-$') + Math.abs(s3diff).toLocaleString() + '/mo' });
+
+  // Scenario 4: Double retainer clients
+  const s4rev = (rc * 2) * rf + pc * pf;
+  const s4cost = tc + ac + Math.round(vc * 1.5) + mc;
+  const s4profit = Math.max(0, s4rev - s4cost);
+  const s4diff = s4profit - currentProfit;
+  scenarios.push({ desc: 'Doubled your retainer clients (with 50% more VA help)', impact: (s4diff > 0 ? '+$' : '-$') + Math.abs(s4diff).toLocaleString() + '/mo' });
+
+  container.innerHTML = scenarios.map(s =>
+    '<div class="whatif-item"><span class="desc">' + s.desc + '</span><span class="impact" style="color:' + (s.impact.startsWith('+') ? '#4ade80' : '#ef4444') + '">' + s.impact + '</span></div>'
+  ).join('');
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + tab));
+}
+
+function shareResults() {
+  const rev = document.getElementById('monthlyRev').textContent;
+  const profit = document.getElementById('monthlyProfit').textContent;
+  const clients = document.getElementById('retainerCount').textContent;
+  document.getElementById('shareText').innerHTML = 'My AI agency does <strong>' + rev + '/mo</strong> with <strong>' + clients + ' retainer clients</strong> and <strong>' + profit + '</strong> profit. What could yours do? 🚀';
+  document.getElementById('shareModal').classList.add('show');
+}
+
+function closeShare() {
+  document.getElementById('shareModal').classList.remove('show');
+}
+
+function copyShareLink() {
+  const text = document.getElementById('shareText').textContent + '\n\n👉 Try the AI Agency Income Simulator: https://aisetupkit.com/free-tools/income-simulator';
+  navigator.clipboard.writeText(text).then(() => {
+    document.querySelector('.share-box .share-link').textContent = '✅ Copied!';
+    setTimeout(() => document.querySelector('.share-box .share-link').textContent = 'aisetupkit.com/free-tools/income-simulator', 2000);
+  }).catch(() => {
+    document.querySelector('.share-box .share-link').textContent = '✅ Copied to clipboard!';
+  });
+}
+
+// Init
+recalc();
+</script>
+</body>
+</html>
