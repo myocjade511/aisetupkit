@@ -2,32 +2,20 @@
 const https = require('https');
 
 const SK = Buffer.from('c2tfdGVzdF81MVRYZktWTEp5MUoxd3ROcHN2a0dhUElQZ3lBZmlPV1Z0c3Y3VjFkNmhNR001OVNHWElsNHozekU4N0VHOTdGdzV2dnRyZXlUTGM2RVY4UWdremc0T0diMzAwMjFCYXo5d2g=', 'base64').toString();
-const PRICE_ID = 'price_1TtzAzLJy1J1wtNpUFKuDszI';
 
 module.exports = async (req, res) => {
-  // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { paymentMethodId } = req.body || {};
-  if (!paymentMethodId) {
-    return res.status(400).json({ error: 'Payment method ID is required' });
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
+    // Only create the PaymentIntent — let frontend confirm the payment
     const data = new URLSearchParams({
       amount: '9700',
       currency: 'usd',
       'payment_method_types[]': 'card',
-      payment_method: paymentMethodId,
-      confirmation_method: 'manual',
-      confirm: 'true',
       description: 'AISetupKit Complete Kit - $97'
     }).toString();
 
@@ -54,6 +42,7 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: result.error.message });
     }
 
+    // Return the client_secret so the frontend can confirm on card input
     return res.json({
       clientSecret: result.client_secret,
       paymentIntentId: result.id,

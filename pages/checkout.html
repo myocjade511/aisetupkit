@@ -18,14 +18,15 @@ h1{font-size:1.5rem;margin-bottom:.3rem}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .guarantee{margin-top:1.5rem;color:#4ade80;font-size:.8rem}
 .footer{margin-top:2rem;font-size:.7rem;color:#4a5568}
-#cardElement{border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem;margin-bottom:1rem;background:#1a1a2e}
+#cardElement{border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem;margin-bottom:1rem;background:#1a1a2e;min-height:40px}
 .StripeElement--focus{border-color:#6366f1}
-.error{color:#ef4444;font-size:.8rem;margin-top:.5rem;display:none}
+.error{color:#ef4444;font-size:.8rem;margin-top:.5rem;display:none;word-break:break-word}
 .success{display:none;text-align:center}
 .success .check{font-size:3rem;margin-bottom:.5rem}
 .success h2{color:#4ade80;margin-bottom:.5rem}
 .loader{display:inline-block;width:16px;height:16px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;margin-right:.5rem;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
+.step-info{font-size:.75rem;color:#6b7280;margin-bottom:.5rem}
 </style>
 </head>
 <body>
@@ -34,6 +35,7 @@ h1{font-size:1.5rem;margin-bottom:.3rem}
 <h1>AISetupKit Complete Kit</h1>
 <div class="price">$97</div>
 <div class="desc">Launch your AI automation agency in 7 days.<br>10 service templates · 6 scripts · Pricing guide · SOPs · Proposal builder · Objection handler</div>
+<div class="step-info">Enter your card details below:</div>
 <div id="cardElement"></div>
 <div id="errorMsg" class="error"></div>
 <button class="btn" id="payBtn">Pay $97</button>
@@ -73,25 +75,12 @@ payBtn.addEventListener('click', async () => {
   payBtn.innerHTML = '<span class="loader"></span> Processing...';
   errorMsg.style.display = 'none';
 
-  const { paymentMethod, error } = await stripe.createPaymentMethod({
-    type: 'card',
-    card: card
-  });
-
-  if (error) {
-    errorMsg.textContent = error.message;
-    errorMsg.style.display = 'block';
-    payBtn.disabled = false;
-    payBtn.innerHTML = 'Pay $97';
-    return;
-  }
-
-  // Create payment intent on server
   try {
+    // Step 1: Create PaymentIntent on server (no payment method yet)
     const res = await fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ paymentMethodId: paymentMethod.id })
+      body: JSON.stringify({})
     });
     const result = await res.json();
 
@@ -103,9 +92,11 @@ payBtn.addEventListener('click', async () => {
       return;
     }
 
-    // Confirm payment
+    // Step 2: Confirm the payment with the card details on the frontend
     const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(result.clientSecret, {
-      payment_method: paymentMethod.id
+      payment_method: {
+        card: card
+      }
     });
 
     if (confirmError) {
@@ -119,6 +110,12 @@ payBtn.addEventListener('click', async () => {
     if (paymentIntent.status === 'succeeded') {
       document.getElementById('checkoutForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
+    } else if (paymentIntent.status === 'requires_action') {
+      // 3D Secure — handled automatically by confirmCardPayment
+      errorMsg.textContent = 'Additional authentication required. Please complete the steps shown.';
+      errorMsg.style.display = 'block';
+      payBtn.disabled = false;
+      payBtn.innerHTML = 'Pay $97';
     }
   } catch (e) {
     errorMsg.textContent = 'Connection error. Please try again.';
