@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free AI Agency Business Plan Generator — AISetupKit</title>
+<meta name="description" content="Answer 6 questions and get a personalized 1-page AI automation agency business plan. Free tool by AISetupKit.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#0b0b14;color:#e2e8f0;min-height:100vh;display:flex;flex-direction:column}
+.container{max-width:680px;width:100%;margin:0 auto;padding:2rem 1.5rem;flex:1}
+header{text-align:center;margin-bottom:2rem}
+.logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#6366f1,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:900;color:#fff;margin:0 auto .8rem}
+h1{font-size:clamp(1.3rem,4vw,1.8rem);font-weight:900;line-height:1.3;margin-bottom:.4rem}
+.sub{color:#8892a4;font-size:.9rem;line-height:1.5;max-width:480px;margin:0 auto}
+
+.progress{display:flex;gap:6px;margin-bottom:2rem;justify-content:center}
+.progress .dot{width:28px;height:4px;border-radius:2px;background:rgba(255,255,255,.08);transition:all .3s}
+.progress .dot.active{background:linear-gradient(90deg,#6366f1,#06b6d4);width:40px}
+.progress .dot.done{background:#6366f1}
+
+.step{display:none;animation:fadeIn .3s ease}
+.step.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.card{background:#14142a;border-radius:16px;padding:2rem;border:1px solid rgba(255,255,255,.06)}
+.card .q{font-size:.75rem;color:#6366f1;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.card label{display:block;font-size:.9rem;margin-bottom:1.5rem;font-weight:700;line-height:1.4}
+.card .opt{display:block;padding:.8rem 1rem;border-radius:10px;border:2px solid rgba(255,255,255,.08);cursor:pointer;transition:all .2s;margin-bottom:.5rem;background:transparent;color:#e2e8f0;font-size:.9rem;width:100%;text-align:left}
+.card .opt:hover{border-color:rgba(99,102,241,.3);background:rgba(99,102,241,.05)}
+.card .opt.selected{border-color:#6366f1;background:rgba(99,102,241,.1)}
+.card .opt input{display:none}
+.card input[type="text"]{width:100%;padding:.8rem 1rem;border-radius:10px;border:2px solid rgba(255,255,255,.08);background:#1a1a2e;color:#e2e8f0;font-size:.9rem;outline:none;transition:border .2s}
+.card input[type="text"]:focus{border-color:#6366f1}
+.card input[type="email"]{width:100%;padding:.8rem 1rem;border-radius:10px;border:2px solid rgba(255,255,255,.08);background:#1a1a2e;color:#e2e8f0;font-size:.9rem;outline:none;transition:border .2s}
+.card input[type="email"]:focus{border-color:#6366f1}
+
+.nav{display:flex;gap:.8rem;margin-top:1.5rem}
+.btn{flex:1;padding:.8rem;border-radius:10px;border:none;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-primary{background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.3)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-outline{background:transparent;color:#8892a4;border:1px solid rgba(255,255,255,.08)}
+.btn-outline:hover{color:#e2e8f0;border-color:rgba(255,255,255,.2)}
+
+/* Result page */
+.result-card{background:#14142a;border-radius:16px;padding:2rem;border:1px solid rgba(255,255,255,.06);display:none;animation:fadeIn .5s ease}
+.result-card.show{display:block}
+.result-card h2{font-size:1.3rem;margin-bottom:.3rem}
+.result-card .tagline{color:#f0d47a;font-size:.85rem;margin-bottom:1.5rem}
+.plan-section{margin-bottom:1.2rem}
+.plan-section h3{font-size:.8rem;color:#6366f1;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem;font-weight:700}
+.plan-section p{font-size:.85rem;color:#a0abbb;line-height:1.6}
+.plan-section ul{list-style:none;padding:0}
+.plan-section ul li{padding:.3rem 0;font-size:.85rem;color:#a0abbb;line-height:1.5}
+.plan-section ul li::before{content:"▸ ";color:#6366f1;font-weight:700}
+.result-actions{margin-top:1.5rem;display:flex;gap:.8rem;flex-wrap:wrap}
+.result-actions .btn{flex:auto;min-width:140px}
+
+.email-capture{background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(6,182,212,.05));border:1px solid rgba(99,102,241,.2);border-radius:12px;padding:1.2rem;margin-top:1rem;text-align:center}
+.email-capture p{font-size:.8rem;color:#8892a4;margin-bottom:.8rem}
+.email-capture .input-group{display:flex;gap:.5rem;max-width:360px;margin:0 auto}
+.email-capture input{flex:1;padding:.7rem;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:#1a1a2e;color:#e2e8f0;font-size:.85rem;outline:none}
+.email-capture input:focus{border-color:#6366f1}
+.email-capture button{padding:.7rem 1.2rem;border-radius:8px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff;border:none;font-weight:700;cursor:pointer;font-size:.85rem}
+.email-capture button:hover{opacity:.9}
+.email-capture .done{display:none;color:#4ade80;font-size:.85rem}
+
+.email-popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;align-items:center;justify-content:center;padding:1rem}
+.email-popup.show{display:flex}
+.email-popup .modal{background:#14142a;border-radius:16px;padding:2rem;max-width:400px;width:100%;border:1px solid rgba(255,255,255,.06);text-align:center;animation:fadeIn .3s ease}
+.email-popup .modal h3{font-size:1.1rem;margin-bottom:.5rem}
+.email-popup .modal p{color:#8892a4;font-size:.85rem;margin-bottom:1rem}
+.email-popup .modal input{width:100%;padding:.8rem;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#1a1a2e;color:#e2e8f0;font-size:.9rem;outline:none;margin-bottom:.8rem;text-align:center}
+.email-popup .modal input:focus{border-color:#6366f1}
+.email-popup .modal .btn{width:100%}
+.email-popup .modal .skip{background:transparent;color:#6b7280;border:none;font-size:.8rem;cursor:pointer;margin-top:.8rem}
+
+footer{text-align:center;padding:1.5rem;font-size:.75rem;color:#4a5568}
+footer a{color:#6366f1;text-decoration:none}
+.trust-badge{display:flex;gap:1rem;justify-content:center;font-size:.7rem;color:#4a5568;margin-top:1.5rem}
+.trust-badge span{display:flex;align-items:center;gap:.3rem}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<a href="/" style="text-decoration:none"><div class="logo">AI</div></a>
+<h1>🧠 AI Agency Business Plan Generator</h1>
+<p class="sub">Answer 6 quick questions. Get a personalized 1-page agency business plan instantly.</p>
+</header>
+
+<div class="progress" id="progressDots"></div>
+
+<!-- STEP 1 -->
+<div class="step active" data-step="1">
+<div class="card">
+<div class="q">Question 1 of 6</div>
+<label>What's your target niche?</label>
+<div class="opt" onclick="select(this,'real-estate')"><input type="radio" name="q1" value="real-estate"><span>🏠 Real Estate Agents</span></div>
+<div class="opt" onclick="select(this,'healthcare')"><input type="radio" name="q1" value="healthcare"><span>🏥 Healthcare / Dental</span></div>
+<div class="opt" onclick="select(this,'ecommerce')"><input type="radio" name="q1" value="ecommerce"><span>🛒 E-commerce Stores</span></div>
+<div class="opt" onclick="select(this,'local-business')"><input type="radio" name="q1" value="local-business"><span>🏪 Local Service Businesses</span></div>
+<div class="opt" onclick="select(this,'legal')"><input type="radio" name="q1" value="legal"><span>⚖️ Legal / Law Firms</span></div>
+<div class="opt" onclick="select(this,'other')"><input type="radio" name="q1" value="other"><span>✨ Other / Not Sure Yet</span></div>
+<div class="nav"><div></div><button class="btn btn-primary" id="next1" onclick="nextStep()" disabled>Next →</button></div>
+</div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step" data-step="2">
+<div class="card">
+<div class="q">Question 2 of 6</div>
+<label>How many clients do you want in your first 90 days?</label>
+<div class="opt" onclick="select(this,'1-3')"><input type="radio" name="q2" value="1-3"><span>🥉 1–3 (Side hustle / testing)</span></div>
+<div class="opt" onclick="select(this,'4-7')"><input type="radio" name="q2" value="4-7"><span>🥈 4–7 (Part-time agency)</span></div>
+<div class="opt" onclick="select(this,'8-15')"><input type="radio" name="q2" value="8-15"><span>🥇 8–15 (Full-time agency)</span></div>
+<div class="opt" onclick="select(this,'16+')"><input type="radio" name="q2" value="16+"><span>🚀 16+ (Scale fast)</span></div>
+<div class="nav"><button class="btn btn-outline" onclick="prevStep()">← Back</button><button class="btn btn-primary" id="next2" onclick="nextStep()" disabled>Next →</button></div>
+</div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step" data-step="3">
+<div class="card">
+<div class="q">Question 3 of 6</div>
+<label>What's your monthly income goal from the agency?</label>
+<div class="opt" onclick="select(this,'1k-3k')"><input type="radio" name="q3" value="1k-3k"><span>💰 $1K–$3K/mo (Extra income)</span></div>
+<div class="opt" onclick="select(this,'3k-7k')"><input type="radio" name="q3" value="3k-7k"><span>💰 $3K–$7K/mo (Replace a job)</span></div>
+<div class="opt" onclick="select(this,'7k-15k')"><input type="radio" name="q3" value="7k-15k"><span>💰 $7K–$15K/mo (Thrive)</span></div>
+<div class="opt" onclick="select(this,'15k+')"><input type="radio" name="q3" value="15k+"><span>💰 $15K+/mo (Freedom)</span></div>
+<div class="nav"><button class="btn btn-outline" onclick="prevStep()">← Back</button><button class="btn btn-primary" id="next3" onclick="nextStep()" disabled>Next →</button></div>
+</div>
+</div>
+
+<!-- STEP 4 -->
+<div class="step" data-step="4">
+<div class="card">
+<div class="q">Question 4 of 6</div>
+<label>What's your experience level with AI tools?</label>
+<div class="opt" onclick="select(this,'newbie')"><input type="radio" name="q4" value="newbie"><span>🌱 Complete beginner</span></div>
+<div class="opt" onclick="select(this,'intermediate')"><input type="radio" name="q4" value="intermediate"><span>📚 Used ChatGPT / some tools</span></div>
+<div class="opt" onclick="select(this,'advanced')"><input type="radio" name="q4" value="advanced"><span>⚡ Already building automations</span></div>
+<div class="nav"><button class="btn btn-outline" onclick="prevStep()">← Back</button><button class="btn btn-primary" id="next4" onclick="nextStep()" disabled>Next →</button></div>
+</div>
+</div>
+
+<!-- STEP 5 -->
+<div class="step" data-step="5">
+<div class="card">
+<div class="q">Question 5 of 6</div>
+<label>How much time can you dedicate per week?</label>
+<div class="opt" onclick="select(this,'5-10')"><input type="radio" name="q5" value="5-10"><span>⏰ 5–10 hrs (Evenings/weekends)</span></div>
+<div class="opt" onclick="select(this,'10-20')"><input type="radio" name="q5" value="10-20"><span>⏰ 10–20 hrs (Half-time)</span></div>
+<div class="opt" onclick="select(this,'20-40')"><input type="radio" name="q5" value="20-40"><span>⏰ 20–40 hrs (Full-time)</span></div>
+<div class="opt" onclick="select(this,'40+')"><input type="radio" name="q5" value="40+"><span>⏰ 40+ hrs (All in)</span></div>
+<div class="nav"><button class="btn btn-outline" onclick="prevStep()">← Back</button><button class="btn btn-primary" id="next5" onclick="nextStep()" disabled>Next →</button></div>
+</div>
+</div>
+
+<!-- STEP 6 - Email -->
+<div class="step" data-step="6">
+<div class="card">
+<div class="q">Last step</div>
+<label>Where should we send your business plan?</label>
+<input type="email" id="emailInput" placeholder="you@example.com" style="margin-bottom:1rem" autocomplete="email">
+<div class="nav"><button class="btn btn-outline" onclick="prevStep()">← Back</button><button class="btn btn-primary" id="generateBtn" onclick="generatePlan()">🚀 Generate My Plan</button></div>
+</div>
+</div>
+
+<!-- RESULT -->
+<div id="emailPopup" class="email-popup">
+<div class="modal">
+<h3>🔒 Save Your Plan</h3>
+<p>Enter your email and we'll send you the full business plan PDF + a free bonus guide.</p>
+<input type="email" id="popupEmail" placeholder="your@email.com" autocomplete="email">
+<button class="btn btn-primary" onclick="saveAndShowPlan()">Send My Plan + Bonus →</button>
+<button class="skip" onclick="showPlanOnly()">No thanks, just show me</button>
+</div>
+</div>
+
+<div class="result-card" id="resultCard">
+<h2>📋 Your AI Agency Business Plan</h2>
+<div class="tagline" id="tagline"></div>
+
+<div class="plan-section">
+<h3>🏆 Your Niche</h3>
+<p id="rNiche"></p>
+</div>
+
+<div class="plan-section">
+<h3>🎯 90-Day Client Goal</h3>
+<p id="rGoal"></p>
+</div>
+
+<div class="plan-section">
+<h3>💰 Revenue Target</h3>
+<p id="rRevenue"></p>
+</div>
+
+<div class="plan-section">
+<h3>📅 Weekly Action Plan</h3>
+<ul id="rActions"></ul>
+</div>
+
+<div class="plan-section">
+<h3>💼 Services to Offer</h3>
+<ul id="rServices"></ul>
+</div>
+
+<div class="plan-section">
+<h3>🔧 Recommended Stack</h3>
+<p id="rStack"></p>
+</div>
+
+<div class="email-capture" id="emailCapture">
+<p>📧 Get this plan delivered to your inbox + a free <strong>"First 5 Clients in 30 Days"</strong> guide</p>
+<div class="input-group">
+<input type="email" id="captureEmail" placeholder="you@example.com">
+<button onclick="sendPlanEmail()">Send Free PDF →</button>
+</div>
+<div class="done" id="emailDone">✅ Sent! Check your inbox.</div>
+</div>
+
+<div class="result-actions">
+<a href="/" class="btn btn-outline" style="text-decoration:none;text-align:center">🏠 Home</a>
+<a href="/checkout" class="btn btn-primary" style="text-decoration:none;text-align:center">📦 Get AISetupKit →</a>
+</div>
+</div>
+</div>
+
+<footer>
+<a href="/">www.aisetupkit.com</a> — Launch your AI automation agency in 7 days
+</footer>
+
+<script>
+let state = { niche: '', clientGoal: '', incomeGoal: '', experience: '', timeCommitment: '', email: '' };
+const labels = { realestate:'Real Estate Agents', healthcare:'Healthcare/Dental', ecommerce:'E-commerce Stores', localbusiness:'Local Service Businesses', legal:'Legal/Law Firms', other:'Your Chosen Niche',
+  '1-3':'1–3 clients (Side hustle)', '4-7':'4–7 clients (Part-time)', '8-15':'8–15 clients (Full-time)', '16+':'16+ clients (Scale fast)',
+  '1k-3k':'$1K–$3K/mo', '3k-7k':'$3K–$7K/mo', '7k-15k':'$7K–$15K/mo', '15k+':'$15K+/mo',
+  'newbie':'Beginner','intermediate':'Intermediate','advanced':'Advanced',
+  '5-10':'5–10 hrs/wk','10-20':'10–20 hrs/wk','20-40':'20–40 hrs/wk','40+':'40+ hrs/wk' };
+
+const nichesMap = {
+  'real-estate': 'Real Estate Agents',
+  'healthcare': 'Healthcare / Dental Practices',
+  'ecommerce': 'E-commerce Stores',
+  'local-business': 'Local Service Businesses',
+  'legal': 'Legal / Law Firms',
+  'other': 'Your Custom Niche'
+};
+
+function select(el, val) {
+  const parent = el.closest('.card');
+  parent.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+  const step = parent.closest('.step');
+  const num = step.dataset.step;
+  document.getElementById('next'+num).disabled = false;
+}
+
+function nextStep() {
+  const cur = document.querySelector('.step.active');
+  const num = parseInt(cur.dataset.step);
+  const checked = cur.querySelector('input:checked');
+  if (!checked) return;
+  const keys = ['niche','clientGoal','incomeGoal','experience','timeCommitment'];
+  state[keys[num-1]] = checked.value;
+  cur.classList.remove('active');
+  document.querySelector(`.step[data-step="${num+1}"]`).classList.add('active');
+  updateDots(num+1);
+}
+
+function prevStep() {
+  const cur = document.querySelector('.step.active');
+  const num = parseInt(cur.dataset.step);
+  cur.classList.remove('active');
+  document.querySelector(`.step[data-step="${num-1}"]`).classList.add('active');
+  updateDots(num-1);
+}
+
+function updateDots(n) {
+  document.querySelectorAll('.dot').forEach((d,i) => {
+    d.classList.toggle('active', i+1===n);
+    d.classList.toggle('done', i+1<n);
+    d.classList.remove('active','done');
+    if(i+1 === n) d.classList.add('active');
+    else if(i+1 < n) d.classList.add('done');
+  });
+}
+
+function generatePlan() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('emailInput').style.borderColor = '#ef4444';
+    return;
+  }
+  state.email = email;
+  document.getElementById('emailInput').style.borderColor = '';
+  showPlan();
+  sendToEmail(email);
+}
+
+function showPlan() {
+  document.querySelector('.step.active').classList.remove('active');
+  document.getElementById('resultCard').classList.add('show');
+  updateDots(6);
+
+  document.getElementById('rNiche').textContent = nichesMap[state.niche] || 'Your chosen niche';
+  document.getElementById('rGoal').textContent = labels[state.clientGoal] || 'Your goal';
+
+  const inc = state.incomeGoal;
+  const clients = parseInt(state.clientGoal?.split('-')[0]) || 5;
+  const pricePerClient = inc === '15k+' ? '1,500+' : inc === '7k-15k' ? '1,000–2,000' : inc === '3k-7k' ? '500–1,000' : '300–500';
+  document.getElementById('rRevenue').textContent = `Charge $${pricePerClient}/client/mo. With ${clients}+ clients at those rates, you'll hit your income target.`;
+
+  const time = state.timeCommitment;
+  const exp = state.experience;
+  let actions = [];
+  if (exp === 'newbie' || exp === 'intermediate') {
+    actions.push('Week 1: Pick your niche and create your service menu using our 10 templates');
+    actions.push('Week 2: Set up your tool stack (ChatGPT + Make/automation tools)');
+    actions.push('Week 3: Start outreach — send 20 personalized messages/day using our scripts');
+    actions.push('Week 4: Close your first client and deliver your first automation');
+    actions.push('Month 2: Refine your process, raise prices, get referrals');
+    actions.push('Month 3: Hire a VA, systematize, scale to 5+ clients');
+  } else {
+    actions.push('Week 1: Nail your offer and build a case study site');
+    actions.push('Week 2: Automate your outreach with our acquisition scripts');
+    actions.push('Week 3-4: Close 3-5 clients using your proposal builder');
+    actions.push('Month 2: Build SOPs and hire delivery support');
+    actions.push('Month 3: Scale to 10+ clients with systems');
+  }
+  document.getElementById('rActions').innerHTML = actions.map(a => '<li>'+a+'</li>').join('');
+
+  const niche = state.niche;
+  let services = [];
+  if (niche === 'real-estate') {
+    services = ['AI lead response automation', 'Automated property listing descriptions', 'CRM + follow-up sequence setup', 'Social media content generation'];
+  } else if (niche === 'healthcare') {
+    services = ['Appointment scheduling automation', 'Patient intake + follow-up flows', 'Insurance verification bots', 'Reputation management'];
+  } else if (niche === 'ecommerce') {
+    services = ['Automated product descriptions', 'Cart abandonment email flows', 'AI customer support chatbot', 'Inventory + order tracking'];
+  } else if (niche === 'local-business') {
+    services = ['Review request automation', 'Booking/scheduling systems', 'SMS marketing sequences', 'Google Business optimization'];
+  } else if (niche === 'legal') {
+    services = ['Client intake automation', 'Document template generation', 'Appointment scheduling', 'Case status updates'];
+  } else {
+    services = ['Custom AI workflow automation', 'Lead generation systems', 'Process documentation + SOPs', 'Reporting dashboard setup'];
+  }
+  document.getElementById('rServices').innerHTML = services.map(s => '<li>'+s+'</li>').join('');
+
+  document.getElementById('rStack').textContent = 'ChatGPT (writing/strategy) · Make.com (automation) · Stripe (billing) · Calendly (scheduling) · Zapier (integration) · AISetupKit templates (delivery)';
+}
+
+function sendToEmail(email) {
+  fetch('/api/save-lead', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, source: 'business-plan-generator', niche: state.niche, goal: state.clientGoal, income: state.incomeGoal, exp: state.experience, time: state.timeCommitment })
+  }).catch(() => {});
+  document.getElementById('emailCapture').querySelector('.input-group').style.display = 'none';
+  document.getElementById('emailDone').style.display = 'block';
+}
+
+function sendPlanEmail() {
+  const email = document.getElementById('captureEmail').value.trim();
+  if (!email || !email.includes('@')) return;
+  sendToEmail(email);
+}
+
+// Init progress dots
+(function(){for(let i=1;i<=6;i++){const d=document.createElement('div');d.className='dot'+(i===1?' active':'');document.getElementById('progressDots').appendChild(d)}})();
+</script>
+</body>
+</html>
