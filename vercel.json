@@ -5,7 +5,8 @@
       "memory": 128
     }
   },
-  "rewrites": [
+  "routes": [
+    {"source": "/api/(.*)", "destination": "/api/$1"},
     {"source": "/thank-you", "destination": "/pages/thank-you.html"},
     {"source": "/members", "destination": "/pages/members.html"},
     {"source": "/bonuses/proposals", "destination": "/pages/bonuses/proposals.html"},
