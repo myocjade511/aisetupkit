@@ -11,13 +11,19 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    // Only create the PaymentIntent — let frontend confirm the payment
-    const data = new URLSearchParams({
+    const { email } = req.body || {};
+
+    const params = new URLSearchParams({
       amount: '9700',
       currency: 'usd',
       'payment_method_types[]': 'card',
       description: 'AISetupKit Complete Kit - $97'
-    }).toString();
+    });
+
+    // Include receipt_email so Stripe sends its own receipt
+    if (email) {
+      params.append('receipt_email', email);
+    }
 
     const result = await new Promise((resolve, reject) => {
       const req = https.request('https://api.stripe.com/v1/payment_intents', {
@@ -34,7 +40,7 @@ module.exports = async (req, res) => {
         });
       });
       req.on('error', reject);
-      req.write(data);
+      req.write(params.toString());
       req.end();
     });
 
@@ -42,7 +48,6 @@ module.exports = async (req, res) => {
       return res.status(400).json({ error: result.error.message });
     }
 
-    // Return the client_secret so the frontend can confirm on card input
     return res.json({
       clientSecret: result.client_secret,
       paymentIntentId: result.id,

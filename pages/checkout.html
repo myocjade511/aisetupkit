@@ -9,46 +9,61 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0b0b14;color:#e2e8f0;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:1rem}
 .card{background:#14142a;border-radius:16px;padding:2.5rem;max-width:420px;width:100%;border:1px solid rgba(255,255,255,.06);text-align:center}
+.card-left{text-align:left}
 .logo{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#6366f1,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;color:#fff;margin:0 auto 1rem}
 h1{font-size:1.5rem;margin-bottom:.3rem}
 .price{font-size:3rem;font-weight:900;background:linear-gradient(135deg,#f0d47a,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.5rem 0}
-.desc{color:#8892a4;font-size:.85rem;margin-bottom:1.5rem;line-height:1.5}
+.desc{color:#8892a4;font-size:.85rem;margin-bottom:1.5rem}
+label{display:block;font-size:.8rem;color:#a0abbb;margin-bottom:.4rem;text-align:left}
+.input-group{margin-bottom:1rem;text-align:left}
+.input-group input{width:100%;padding:.75rem;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:#1a1a2e;color:#e2e8f0;font-size:1rem;outline:none;transition:border .2s}
+.input-group input:focus{border-color:#6366f1}
+#cardElement{border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem;background:#1a1a2e;min-height:40px;transition:border .2s}
+#cardElement.StripeElement--focus{border-color:#6366f1}
 .btn{display:block;width:100%;padding:.9rem;border-radius:10px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#fff;border:none;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;margin-top:.5rem}
 .btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(99,102,241,.3)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .guarantee{margin-top:1.5rem;color:#4ade80;font-size:.8rem}
 .footer{margin-top:2rem;font-size:.7rem;color:#4a5568}
-#cardElement{border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.75rem;margin-bottom:1rem;background:#1a1a2e;min-height:40px}
-.StripeElement--focus{border-color:#6366f1}
 .error{color:#ef4444;font-size:.8rem;margin-top:.5rem;display:none;word-break:break-word}
 .success{display:none;text-align:center}
 .success .check{font-size:3rem;margin-bottom:.5rem}
 .success h2{color:#4ade80;margin-bottom:.5rem}
+.success p{color:#8892a4;margin-bottom:.3rem;line-height:1.5}
 .loader{display:inline-block;width:16px;height:16px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;margin-right:.5rem;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
-.step-info{font-size:.75rem;color:#6b7280;margin-bottom:.5rem}
 </style>
 </head>
 <body>
 <div class="card" id="checkoutForm">
 <div class="logo">AI</div>
-<h1>AISetupKit Complete Kit</h1>
+<h1>AISetupKit</h1>
 <div class="price">$97</div>
-<div class="desc">Launch your AI automation agency in 7 days.<br>10 service templates · 6 scripts · Pricing guide · SOPs · Proposal builder · Objection handler</div>
-<div class="step-info">Enter your card details below:</div>
+<div class="desc">Complete Kit — Launch your AI agency in 7 days</div>
+
+<div class="input-group card-left">
+<label for="email">📧 Email address (for delivery)</label>
+<input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+</div>
+
+<div class="card-left">
+<label>💳 Card details</label>
 <div id="cardElement"></div>
+</div>
+
 <div id="errorMsg" class="error"></div>
 <button class="btn" id="payBtn">Pay $97</button>
 <div class="guarantee">🛡️ 30-Day Money-Back Guarantee</div>
-<div class="footer">Secure checkout powered by Stripe · Test mode</div>
+<div class="footer">Secure checkout · Powered by Stripe</div>
 </div>
 
 <div class="card success" id="successMsg">
 <div class="check">✅</div>
-<h2>Payment Successful!</h2>
-<p style="color:#8892a4;margin-bottom:1rem">Your AISetupKit access is being prepared.</p>
-<p style="font-size:.8rem;color:#6366f1">📧 Check your email for access instructions</p>
-<div class="footer" style="margin-top:1.5rem"><a href="https://www.aisetupkit.com" style="color:#6366f1">← Back to AISetupKit</a></div>
+<h2>You're In! 🎉</h2>
+<p>Payment successful.</p>
+<p style="margin-top:.8rem;font-size:.9rem">We just sent your AISetupKit access instructions to:</p>
+<p id="confirmedEmail" style="color:#6366f1;font-weight:700;font-size:1rem;margin-top:.3rem"></p>
+<div class="footer" style="margin-top:1.5rem"><a href="https://www.aisetupkit.com" style="color:#6366f1">← Back to homepage</a></div>
 </div>
 
 <script>
@@ -69,18 +84,27 @@ card.mount('#cardElement');
 
 const payBtn = document.getElementById('payBtn');
 const errorMsg = document.getElementById('errorMsg');
+const emailInput = document.getElementById('email');
 
 payBtn.addEventListener('click', async () => {
+  const email = emailInput.value.trim();
+  if (!email || !email.includes('@')) {
+    errorMsg.textContent = 'Please enter a valid email address for delivery.';
+    errorMsg.style.display = 'block';
+    emailInput.focus();
+    return;
+  }
+
   payBtn.disabled = true;
   payBtn.innerHTML = '<span class="loader"></span> Processing...';
   errorMsg.style.display = 'none';
 
   try {
-    // Step 1: Create PaymentIntent on server (no payment method yet)
+    // Step 1: Create PaymentIntent on server
     const res = await fetch('/api/create-payment-intent', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({})
+      body: JSON.stringify({ email: email })
     });
     const result = await res.json();
 
@@ -92,10 +116,11 @@ payBtn.addEventListener('click', async () => {
       return;
     }
 
-    // Step 2: Confirm the payment with the card details on the frontend
+    // Step 2: Confirm the payment with card details
     const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(result.clientSecret, {
       payment_method: {
-        card: card
+        card: card,
+        billing_details: { email: email }
       }
     });
 
@@ -108,10 +133,25 @@ payBtn.addEventListener('click', async () => {
     }
 
     if (paymentIntent.status === 'succeeded') {
+      // Step 3: Send receipt email
+      try {
+        await fetch('/api/send-receipt', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: email,
+            intentId: paymentIntent.id
+          })
+        });
+      } catch (e) {
+        // email send failure shouldn't block the success page
+        console.error('Email send failed:', e);
+      }
+
       document.getElementById('checkoutForm').style.display = 'none';
+      document.getElementById('confirmedEmail').textContent = email;
       document.getElementById('successMsg').style.display = 'block';
     } else if (paymentIntent.status === 'requires_action') {
-      // 3D Secure — handled automatically by confirmCardPayment
       errorMsg.textContent = 'Additional authentication required. Please complete the steps shown.';
       errorMsg.style.display = 'block';
       payBtn.disabled = false;
