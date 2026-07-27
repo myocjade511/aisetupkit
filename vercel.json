@@ -24,6 +24,7 @@
         {"source": "/free-tools/outreach-plan", "destination": "/pages/free-tools/outreach-plan.html"},
         {"source": "/free-tools/stack-audit", "destination": "/pages/free-tools/stack-audit.html"},
         {"source": "/free-tools/niche-finder", "destination": "/pages/free-tools/niche-finder.html"},
+        {"source": "/free-tools/proposal-preview", "destination": "/pages/free-tools/proposal-preview.html"},
     {"source": "/free-tools/agency-plan", "destination": "/pages/free-tools/agency-plan.html"},
     {"source": "/free-tools/income-simulator", "destination": "/pages/free-tools/income-simulator.html"},
     {"source": "/pages/(.*)", "destination": "/pages/$1"},
